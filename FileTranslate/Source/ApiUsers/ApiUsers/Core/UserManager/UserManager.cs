@@ -45,14 +45,27 @@ namespace ApiUsers.Core.UserManager
                     Name = user.Name,
                     LastName = user.LastName,
                     Email = user.Email,
-                    Password = user.Password
+                    Password = Encrypt.GetSHA256(user.Password)
 
                 };
 
-                _context.Users.Add(nuevaUser);
-                await _context.SaveChangesAsync();
+              var vali = (from d in _context.Users 
+                          where d.Email == user.Email select d).FirstOrDefault();
 
-                resultado.Value = nuevaUser;
+                if (vali != null)
+                {
+                    resultado.AddError("No existe");
+                }
+                else
+                {
+                  
+                    _context.Users.Add(nuevaUser);
+                    await _context.SaveChangesAsync();
+                    resultado.Value = nuevaUser;
+                }
+              
+
+              
             }
             catch (Exception e)
             {
