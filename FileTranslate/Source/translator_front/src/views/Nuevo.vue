@@ -1,66 +1,60 @@
 <template>
     <div>
         <Header />
-            <div class="container">
-                
-
-             <form action="" class="form-horizontal">
-                  <div class="form-group left row">
-                         <div class="col">
-                            <label for="" class="control-label col-sm-2">Name</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" name="name" id="name" v-model="form.name">
-                            </div>
-                          </div>
-                         <div class="col">
-                              <label for="" class="control-label col-sm-2">lastName</label>
-                              <div class="col-sm-7">
-                                  <input type="text" class="form-control" name="lastName" id="lastName" v-model="form.lastName">
-                                 
-                              </div>
-                        </div>
-                    </div>
-
-                      <div class="form-group left row">
-                         <div class="col">
-                            <label for="" class="control-label col-sm-2">Email</label>
-                            <div class="col-sm-7">
-                                <input type="email" class="form-control" name="email" id="email" v-model="form.email">
-                            </div>
-                          </div>
-                         <div class="col">
-                              <label for="" class="control-label col-sm-2">Password</label>
-                              <div class="col-sm-7">
-                                  <input type="text" class="form-control" name="password" id="password" v-model="form.password">
-                              </div>
-                        </div>
-                    </div>
-
-                                  
-
-
-                
-               <br/><br/>
-               
-
-
-                    <div class="form-group left">
-                      <button type="button" class="btn btn-primary" v-on:click="guardar()" >Guardar</button>
-               
-                      <button type="button" class="btn btn-dark margen" v-on:click="salir()"  >Salir</button>
-                    </div> 
-                </form>
           
-                  
-
-            </div>
-        <!-- <Footer /> -->
+ <div class="container">
+        <div class="row">
+            <div class="col">               
+                <div class="shadow-lg p-3 mb-5 mt-4 bg-body rounded">                                    
+                    <div class="p-3 mb-2 bg-primary bg-gradient fw-bold text-white">Create Users</div>
+                    <form class="row g-3 needs-validation" novalidate>
+                         <div class="col-md-4 position-relative">
+                            <label for="nombre" class="form-label">Name</label>
+                          <input type="text" class="form-control" name="name" id="name" v-model="form.name">
+                            <!-- Mensajes para validación   -->
+                            <div class="valid-tooltip">¡Campo válido!</div>
+                            <div class="invalid-tooltip">Debe completar los datos.</div>
+                        </div>
+                        <div class="col-md-4 position-relative">
+                            <label for="nombre" class="form-label">lastName</label>
+                          <input type="text" class="form-control" name="lastName" id="lastName" v-model="form.lastName">
+                            <!-- Mensajes para validación   -->
+                            <div class="valid-tooltip">¡Campo válido!</div>
+                            <div class="invalid-tooltip">Debe completar los datos.</div>
+                        </div>
+                        <div class="col-md-4 position-relative">
+                            <label for="apellido" class="form-label">Email</label>
+                               <input type="email" class="form-control" name="email" id="email" v-model="form.email">
+                            <!-- Mensajes para validación   -->
+                            <div class="valid-tooltip">¡Campo válido!</div>
+                            <div class="invalid-tooltip">Debe completar los datos.</div>
+                        </div>                                             
+                        <div class="col-md-4 position-relative">
+                            <label for="pais" class="form-label">Password</label>
+                                  <input type="text" class="form-control" name="password" id="password" v-model="form.password">
+                           
+                            <!-- Mensajes para validación   -->
+                            <div class="valid-tooltip">¡Campo válido!</div>
+                            <div class="invalid-tooltip">Debe completar los datos.</div>
+                        </div>                   
+                        <div class="col-12">
+                     
+                          <button type="button" class="btn btn-primary fw-bold float-end" v-on:click="guardar()" >Guardar</button>
                
+                      <button type="button" class="btn btn-dark margen fw-bold float-end" v-on:click="salir()"  >Salir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        <Footer/>       
     </div>
 </template>
 <script>
 import Header from '@/components/Header.vue'
-//import Footer from '@/components/Footer.vue'
+import Footer from '@/components/Footer.vue'
 import axios from 'axios';
 export default {
     name:"Nuevo",
@@ -78,7 +72,7 @@ export default {
     },
     components:{
         Header,
-        //Footer
+        Footer
     },
     methods:{
         guardar(){

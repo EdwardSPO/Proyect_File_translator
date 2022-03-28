@@ -28,10 +28,11 @@ namespace ApiUsers
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddCors();
+            services.AddControllers();
 
-            services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+         
 
             #region Inyeccion de dependencias
             services.AddScoped<IUserManager, UserManager>();
@@ -49,6 +50,9 @@ namespace ApiUsers
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(
+       options => options.WithOrigins("*").AllowAnyHeader().AllowAnyMethod()
+         );
 
             app.UseHttpsRedirection();
 
@@ -61,9 +65,8 @@ namespace ApiUsers
                 endpoints.MapControllers();
             });
 
-            app.UseCors(
-       options => options.WithOrigins("http://localhost:8080").AllowAnyMethod()
-   );
+           
+         
         }
 
 
