@@ -60,6 +60,12 @@ namespace ApiUsers
             {
                 endpoints.MapControllers();
             });
+
+            app.UseCors(
+       options => options.WithOrigins("http://localhost:8080").AllowAnyMethod()
+   );
         }
+
+
     }
 }

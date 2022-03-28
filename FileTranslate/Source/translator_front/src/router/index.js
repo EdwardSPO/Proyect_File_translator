@@ -2,10 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Dashboard from '../views/Dashboard.vue'
-
-import Nuevo from '../views/Nuevo.vue'
 import Login from '../views/Login.vue'
-
+import Nuevo from '../views/Nuevo.vue'
 
 Vue.use(VueRouter)
 
@@ -16,10 +14,11 @@ const routes = [
     component: Login
   },
   {
-    path: '/dashboard',
+    path: '/',
     name: 'Dashboard',
     component: Dashboard
   },
+
   {
     path: '/nuevo',
     name: 'Nuevo',

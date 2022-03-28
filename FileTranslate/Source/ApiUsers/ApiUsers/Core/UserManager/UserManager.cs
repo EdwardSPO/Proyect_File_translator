@@ -54,7 +54,7 @@ namespace ApiUsers.Core.UserManager
 
                 if (vali != null)
                 {
-                    resultado.AddError("No existe");
+                    resultado.AddError("Email already exists");
                 }
                 else
                 {
