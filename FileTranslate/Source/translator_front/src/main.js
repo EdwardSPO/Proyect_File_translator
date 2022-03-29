@@ -4,12 +4,14 @@ import router from './router'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue' 
 import VueAxios from 'vue-axios'
 import Axios from 'axios'
+import Vuelidate from 'vuelidate'
 
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueAxios, Axios);
+Vue.use(Vuelidate);
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
