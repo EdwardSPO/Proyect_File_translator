@@ -11,20 +11,11 @@ namespace ApiUsers.Controller
     [ApiController]
     public class UserController : ControllerBase
     {
-       
-
         private readonly IUserManager _userManager;
-
         public UserController( IUserManager userManager)
         {
-          
             _userManager = userManager;
-
-
         }
-
-      
-
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
@@ -35,7 +26,6 @@ namespace ApiUsers.Controller
             }
             return NotFound(ordenResult.Errors);
         }
-
         [HttpPost]
         public async Task<ActionResult> Post(User user)
         {
@@ -46,12 +36,5 @@ namespace ApiUsers.Controller
             }
             return BadRequest(result.Errors);
         }
-
-
-
-       
-
-      
-
     }
 }

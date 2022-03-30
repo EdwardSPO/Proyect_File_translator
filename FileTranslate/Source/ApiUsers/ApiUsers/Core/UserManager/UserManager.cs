@@ -17,7 +17,8 @@ namespace ApiUsers.Core.UserManager
         {
             _context = context;
         }
-
+        private const string _ERROR_USER = "this data does not exist";
+        private const string _ERROR_EMAIL = "Email already exists";
         public async Task<ResultHelper<User>> GetByIdAsync(int id)
         {
             var resultado = new ResultHelper<User>();
@@ -28,13 +29,13 @@ namespace ApiUsers.Core.UserManager
             }
             else
             {
-                resultado.AddError("no existe");
+                string error = _ERROR_USER;
+                resultado.AddError(error);
+
             }
 
             return resultado;
         }
-
-
         public async Task<ResultHelper<User>> CreateAsync(User user)
         {
             var resultado = new ResultHelper<User>();
@@ -52,34 +53,21 @@ namespace ApiUsers.Core.UserManager
               var vali = (from d in _context.Users 
                           where d.Email == user.Email select d).FirstOrDefault();
 
-                if (vali != null)
-                {
-                    
-                    resultado.AddError("Email already exists");
+                if (vali != null){                
+                    string error = _ERROR_EMAIL;
+                    resultado.AddError(error);
                 }
-                else
-                {
-                  
+                else{
                     _context.Users.Add(nuevaUser);
                     await _context.SaveChangesAsync();
                     resultado.Value = nuevaUser;
                 }
-              
-
-              
             }
             catch (Exception e)
             {
                 resultado.AddError(e.Message);
             }
             return resultado;
-        }
-
-    
-
-      
-
-
-     
+        }     
     }
 }

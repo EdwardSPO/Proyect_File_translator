@@ -1,11 +1,8 @@
 <template>
-
 <div>
-      <b-navbar toggleable="lg" type="dark" variant="info">
+       <b-navbar toggleable="lg" type="dark" variant="info">
           <b-navbar-brand href="#">Nserio</b-navbar-brand>
-
-      </b-navbar>
+          </b-navbar>
         <br><br>
-</div>
-    
+</div>  
 </template>
