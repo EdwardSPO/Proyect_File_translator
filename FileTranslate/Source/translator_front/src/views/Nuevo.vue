@@ -60,7 +60,7 @@ import Footer from '@/components/Footer.vue'
 import axios from 'axios';
 import Swal from 'sweetalert';
 import {required, minLength , email} from 'vuelidate/lib/validators';
-
+import global from '../../config.js'
 export default {
     name:"Nuevo",
    
@@ -68,11 +68,11 @@ export default {
         return {
             submited: false,
            form:{
-               "name": "",
-               "lastName": "",
-             "email":"",
-             "password":"",
-             errors: []
+              "name": "",
+              "lastName": "",
+              "email":"",
+              "password":"",
+               errors: []
            
           },
         }
@@ -85,17 +85,13 @@ export default {
     methods:{
        
         guardar(){
-            
-            axios.post("http://localhost:36777/api/user",this.form)
+          
+            axios.post(global.API_USERS,this.form)
             .then(data =>{
-                console.log(data);
-                console.log(this.form);
-                this.makeToast("Hecho","Usuario creado","success");
+                this.makeToast("Hecho","Usuario creado","success"+data);
                 this.$router.push("/");
             }).catch( e =>{
-                console.log(e);
-                
-               
+                console.log(e);                      
                swal({title: "Warning",  text: "Email already exists",
                    icon: "warning",
                    })

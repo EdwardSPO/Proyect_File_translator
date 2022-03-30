@@ -19,6 +19,29 @@ namespace ApiUsers.Core.UserManager
         }
         private const string _ERROR_USER = "this data does not exist";
         private const string _ERROR_EMAIL = "Email already exists";
+
+
+        public async Task<ResultHelper<IEnumerable<User>>> GetUsersAsync()
+        {
+            var resultado = new ResultHelper<IEnumerable<User>>();
+            var users = await _context.Users.Select(s => new User
+            {
+                Id = s.Id,
+                Name = s.Name,
+                LastName = s.LastName,
+                Email = s.Email,
+                Password = s.Password
+            }).ToListAsync();
+            if (users.Count > 0)
+            {
+                resultado.Value = users;
+            }
+            else
+            {
+                resultado.AddError("No existe usuario en este momento");
+            }
+            return resultado;
+        }
         public async Task<ResultHelper<User>> GetByIdAsync(int id)
         {
             var resultado = new ResultHelper<User>();
@@ -68,6 +91,8 @@ namespace ApiUsers.Core.UserManager
                 resultado.AddError(e.Message);
             }
             return resultado;
-        }     
+        }
+
+
     }
 }
