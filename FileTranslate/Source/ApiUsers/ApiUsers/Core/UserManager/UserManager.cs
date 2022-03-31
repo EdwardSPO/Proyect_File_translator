@@ -19,6 +19,9 @@ namespace ApiUsers.Core.UserManager
         }
         private const string _ERROR_USER = "this data does not exist";
         private const string _ERROR_EMAIL = "Email already exists";
+        private const string _ERROR_LIST = "There is no user at this time"; 
+        
+
 
 
         public async Task<ResultHelper<IEnumerable<User>>> GetUsersAsync()
@@ -38,7 +41,8 @@ namespace ApiUsers.Core.UserManager
             }
             else
             {
-                resultado.AddError("No existe usuario en este momento");
+                string error = _ERROR_LIST;
+                resultado.AddError(error);
             }
             return resultado;
         }
