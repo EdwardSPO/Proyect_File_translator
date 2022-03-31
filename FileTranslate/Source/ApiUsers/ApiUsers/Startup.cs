@@ -1,7 +1,10 @@
+using ApiUsers.Core.UserManager;
+using ApiUsers.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,7 +28,12 @@ namespace ApiUsers
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddCors();
+            services.AddControllers();    
+            #region Inyeccion de dependencias
+            services.AddScoped<IUserManager, UserManager>();
+            #endregion
+            services.AddDbContext<UsersContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("PruebaDb")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +43,7 @@ namespace ApiUsers
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(options => options.WithOrigins("*").AllowAnyHeader().AllowAnyMethod());
 
             app.UseHttpsRedirection();
 
@@ -45,7 +54,7 @@ namespace ApiUsers
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            });       
         }
     }
 }
