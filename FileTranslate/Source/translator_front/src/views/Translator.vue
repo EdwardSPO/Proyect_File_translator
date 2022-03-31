@@ -13,7 +13,7 @@
         />
       </div>
 
-      <div class="input-group mb-3">
+      <div class="flex-wrap input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">Idioma</label>
         <select class="form-select" id="inputGroupSelect01">
           <option selected>Seleccione el idioma</option>
@@ -22,25 +22,24 @@
           <option value="3"></option>
         </select>
       </div>
-      -->
+      
       <br />
-      <div class="progress">
-        <p>
-          Progress:
-          <!-- <progress :value="uploadValue" max='100'></progress> -->
-        </p>
-      </div>
+    <div class=" flex-wrap progress"></div>
+ <h5 id="charge">Progress:</h5> 
+  <progress id="progress" value="0" max="100" class="barraStyle" style="background-color=red" ></progress> 
+
 
       <div
-        class="btn-group"
+        class="flex-wrap btn-group"
         role="group"
         aria-label="Basic mixed styles example"
       >
         <button
           id="traduccion"
           type="button"
-          class="btn btn-success"
-          @click="submitForm($event)"
+          value="cargar"
+          class="flex-wrap btn btn-success"
+          @click="setInterval(submitForm($event),250)"
         >
           Traducir
         </button>
@@ -57,7 +56,7 @@ export default {
   data() {
     return {
       uploadURL: url + "subDirectory=File",
-      file: "",
+      file: ""
     };
   },
   methods: {
@@ -82,6 +81,9 @@ return false;
     }
     },
     submitForm(event) {
+        var barra = document.getElementById('progress')
+      barra.value +=100
+    
       event.preventDefault();
       let formData = new FormData();
       formData.append("file", this.file);
@@ -89,6 +91,8 @@ return false;
       let config = {
         headers: {
           "Content-Type": "multipart/form-data",
+
+          
         },
       };
 
@@ -100,6 +104,7 @@ return false;
           }
         });
     },
+  
   },
 };
 </script>
@@ -151,5 +156,27 @@ h1 {
   position: absolute;
   top: 460px;
   left: 1300px;
+}
+
+.barraStyle{
+  position: absolute;
+   width:150px;
+    color:rgb(202, 55, 10);
+    height: 40px;
+    top:470px;
+    left:1310px
+}
+#charge{
+  position:absolute;
+ top:475px;
+ left:1200px;
+ color:rgb(5, 83, 5);
+}
+
+#container{
+    position:absolute;
+ top:435px;
+ left:1310px;
+ color:rgb(5, 83, 5);
 }
 </style>

@@ -10,6 +10,8 @@ import Translator from '../views/Translator'
 
 
 
+
+
 Vue.use(VueRouter)
 
 const routes = [{
