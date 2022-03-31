@@ -1,0 +1,957 @@
+create database our_firts_database;
+
+use our_firts_database;
+-- Table: city
+
+
+CREATE TABLE city (
+    id int  NOT NULL IDENTITY(1, 1),
+    city_name char(128)  NOT NULL,
+    lat decimal(9,6)  NOT NULL,
+    long decimal(9,6)  NOT NULL,
+    country_id int  NOT NULL,
+    CONSTRAINT city_pk PRIMARY KEY  (id)
+);
+
+-- Table: country
+CREATE TABLE country (
+    id int  NOT NULL IDENTITY(1, 1),
+    country_name char(128)  NOT NULL,
+    country_name_eng char(128)  NOT NULL,
+    country_code char(8)  NOT NULL,
+    CONSTRAINT country_ak_1 UNIQUE (country_name),
+    CONSTRAINT country_ak_2 UNIQUE (country_name_eng),
+    CONSTRAINT country_ak_3 UNIQUE (country_code),
+    CONSTRAINT country_pk PRIMARY KEY  (id)
+);
+
+
+
+-- foreign keys
+-- Reference: city_country (table: city)
+ALTER TABLE city ADD CONSTRAINT city_country
+    FOREIGN KEY (country_id)
+    REFERENCES country (id);
+
+
+
+	INSERT INTO country (country_name, country_name_eng, country_code) VALUES ('Deutschland', 'Germany', 'DEU');
+INSERT INTO country (country_name, country_name_eng, country_code) VALUES ('Srbija', 'Serbia', 'SRB');
+INSERT INTO country (country_name, country_name_eng, country_code) VALUES ('Hrvatska', 'Croatia', 'HRV');
+INSERT INTO country (country_name, country_name_eng, country_code) VALUES ('United Stated of America', 'United Stated of America', 'USA');
+INSERT INTO country (country_name, country_name_eng, country_code) VALUES ('Polska', 'Poland', 'POL');
+
+select * from country;
+
+
+
+INSERT INTO city (city_name, lat, long, country_id) VALUES ('Berlin', 52.520008, 13.404954, 1);
+INSERT INTO city (city_name, lat, long, country_id) VALUES ('Belgrade', 44.787197, 20.457273, 2);
+INSERT INTO city (city_name, lat, long, country_id) VALUES ('Zagreb', 45.815399, 15.966568, 3);
+INSERT INTO city (city_name, lat, long, country_id) VALUES ('New York', 40.73061, -73.935242, 4);
+INSERT INTO city (city_name, lat, long, country_id) VALUES ('Los Angeles', 34.052235, -118.243683, 4);
+INSERT INTO city (city_name, lat, long, country_id) VALUES ('Warsaw', 52.237049, 21.017532, 5);
+
+select * from city;
+
+select * from  city where city_name = 'Berlin';
+
+select * from  city where id = 1;
+
+
+-- INSERT INTO city (city_name, lat, long, country_id) VALUES ('Wien', 48.2084885, 16.3720798, 6);
+
+--DELETE FROM country WHERE id = 5;
+
+SELECT id, country_name
+FROM country;
+
+
+SELECT id, country_name_eng
+FROM country
+WHERE id = 2;
+    
+SELECT id, country_name_eng
+FROM country
+WHERE id > 2;
+    
+SELECT id, country_name_eng
+FROM country
+WHERE id = 6;
+
+
+SELECT city.id AS city_id, city.city_name, country.id AS country_id, country.country_name, country.country_name_eng, country.country_code
+FROM city
+INNER JOIN country ON city.country_id = country.id
+WHERE country.id IN (1,4,5);
+
+
+INSERT INTO country (country_name, country_name_eng, country_code) VALUES ('España', 'Spain', 'ESP');
+INSERT INTO country (country_name, country_name_eng, country_code) VALUES ('Rossiya', 'Russia', 'RUS');
+
+SELECT *
+FROM country, city
+WHERE city.country_id = country.id;
+    
+SELECT *
+FROM country
+INNER JOIN city ON city.country_id = country.id;
+
+
+
+
+-- tables
+-- Table: call
+CREATE TABLE call (
+    id int  NOT NULL IDENTITY(1, 1),
+    employee_id int  NOT NULL,
+    customer_id int  NOT NULL,
+    start_time datetime  NOT NULL,
+    end_time datetime  NULL,
+    call_outcome_id int  NULL,
+    CONSTRAINT call_ak_1 UNIQUE (employee_id, start_time),
+    CONSTRAINT call_pk PRIMARY KEY  (id)
+);
+    
+-- Table: call_outcome
+CREATE TABLE call_outcome (
+    id int  NOT NULL IDENTITY(1, 1),
+    outcome_text char(128)  NOT NULL,
+    CONSTRAINT call_outcome_ak_1 UNIQUE (outcome_text),
+    CONSTRAINT call_outcome_pk PRIMARY KEY  (id)
+);
+    
+-- Table: customer
+CREATE TABLE customer (
+    id int  NOT NULL IDENTITY(1, 1),
+    customer_name varchar(255)  NOT NULL,
+    city_id int  NOT NULL,
+    customer_address varchar(255)  NOT NULL,
+    next_call_date date  NULL,
+    ts_inserted datetime  NOT NULL,
+    CONSTRAINT customer_pk PRIMARY KEY  (id)
+);
+    
+-- Table: employee
+CREATE TABLE employee (
+    id int  NOT NULL IDENTITY(1, 1),
+    first_name varchar(255)  NOT NULL,
+    last_name varchar(255)  NOT NULL,
+    CONSTRAINT employee_pk PRIMARY KEY  (id)
+);
+    
+-- foreign keys
+-- Reference: call_call_outcome (table: call)
+ALTER TABLE call ADD CONSTRAINT call_call_outcome
+    FOREIGN KEY (call_outcome_id)
+    REFERENCES call_outcome (id);
+    
+-- Reference: call_customer (table: call)
+ALTER TABLE call ADD CONSTRAINT call_customer
+    FOREIGN KEY (customer_id)
+    REFERENCES customer (id);
+ 
+-- Reference: call_employee (table: call)
+ALTER TABLE call ADD CONSTRAINT call_employee
+    FOREIGN KEY (employee_id)
+    REFERENCES employee (id);
+ 
+-- Reference: customer_city (table: customer)
+ALTER TABLE customer ADD CONSTRAINT customer_city
+    FOREIGN KEY (city_id)
+    REFERENCES city (id);
+    
+-- insert values
+INSERT INTO call_outcome (outcome_text) VALUES ('call started');
+INSERT INTO call_outcome (outcome_text) VALUES ('finished - successfully');
+INSERT INTO call_outcome (outcome_text) VALUES ('finished - unsuccessfully');
+    
+INSERT INTO employee (first_name, last_name) VALUES ('Thomas (Neo)', 'Anderson');
+INSERT INTO employee (first_name, last_name) VALUES ('Agent', 'Smith');
+    
+INSERT INTO customer (customer_name, city_id, customer_address, next_call_date, ts_inserted) VALUES ('Jewelry Store', 4, 'Long Street 120', '2020/1/21', '2020/1/9 14:1:20');
+INSERT INTO customer (customer_name, city_id, customer_address, next_call_date, ts_inserted) VALUES ('Bakery', 1, 'Kurfürstendamm 25', '2020/2/21', '2020/1/9 17:52:15');
+INSERT INTO customer (customer_name, city_id, customer_address, next_call_date, ts_inserted) VALUES ('Café', 1, 'Tauentzienstraße 44', '2020/1/21', '2020/1/10 8:2:49');
+INSERT INTO customer (customer_name, city_id, customer_address, next_call_date, ts_inserted) VALUES ('Restaurant', 3, 'Ulica lipa 15', '2020/1/21', '2020/1/10 9:20:21');
+    
+INSERT INTO call (employee_id, customer_id, start_time, end_time, call_outcome_id) VALUES (1, 4, '2020/1/11 9:0:15', '2020/1/11 9:12:22', 2);
+INSERT INTO call (employee_id, customer_id, start_time, end_time, call_outcome_id) VALUES (1, 2, '2020/1/11 9:14:50', '2020/1/11 9:20:1', 2);
+INSERT INTO call (employee_id, customer_id, start_time, end_time, call_outcome_id) VALUES (2, 3, '2020/1/11 9:2:20', '2020/1/11 9:18:5', 3);
+INSERT INTO call (employee_id, customer_id, start_time, end_time, call_outcome_id) VALUES (1, 1, '2020/1/11 9:24:15', '2020/1/11 9:25:5', 3);
+INSERT INTO call (employee_id, customer_id, start_time, end_time, call_outcome_id) VALUES (1, 3, '2020/1/11 9:26:23', '2020/1/11 9:33:45', 2);
+INSERT INTO call (employee_id, customer_id, start_time, end_time, call_outcome_id) VALUES (1, 2, '2020/1/11 9:40:31', '2020/1/11 9:42:32', 2);
+INSERT INTO call (employee_id, customer_id, start_time, end_time, call_outcome_id) VALUES (2, 4, '2020/1/11 9:41:17', '2020/1/11 9:45:21', 2);
+INSERT INTO call (employee_id, customer_id, start_time, end_time, call_outcome_id) VALUES (1, 1, '2020/1/11 9:42:32', '2020/1/11 9:46:53', 3);
+INSERT INTO call (employee_id, customer_id, start_time, end_time, call_outcome_id) VALUES (2, 1, '2020/1/11 9:46:0', '2020/1/11 9:48:2', 2);
+INSERT INTO call (employee_id, customer_id, start_time, end_time, call_outcome_id) VALUES (2, 2, '2020/1/11 9:50:12', '2020/1/11 9:55:35', 2);
+
+select * from employee;
+select * from customer;
+select * from call_outcome;
+select * from call;
+
+SELECT *
+FROM city;
+ 
+SELECT *
+FROM customer;
+
+SELECT *
+FROM customer
+INNER JOIN city ON customer.city_id = city.id;
+ 
+SELECT *
+FROM customer
+LEFT JOIN city ON customer.city_id = city.id;
+ 
+SELECT *
+FROM city
+LEFT JOIN customer ON customer.city_id = city.id;
+
+select count(*) as number_of_countries from country;
+select count(*) as number_of_city from city;
+
+
+SELECT *
+FROM country
+INNER JOIN city ON city.country_id =  country.id;
+    
+SELECT COUNT(*) AS number_of_rows
+FROM country
+INNER JOIN city ON city.country_id =  country.id;
+
+SELECT *
+FROM country
+LEFT JOIN city ON city.country_id =  country.id;
+    
+SELECT COUNT(*) AS number_of_rows
+FROM country
+LEFT JOIN city ON city.country_id =  country.id;
+    
+SELECT COUNT(country.country_name) AS countries, COUNT(city.city_name) AS cities
+FROM country
+LEFT JOIN city ON city.country_id =  country.id;
+
+
+SELECT 
+	country.country_name_eng,
+	SUM(CASE WHEN call.id IS NOT NULL THEN 1 ELSE 0 END) AS calls,
+	AVG(ISNULL(DATEDIFF(SECOND, call.start_time, call.end_time),0)) AS avg_difference
+FROM country 
+LEFT JOIN city ON city.country_id = country.id
+LEFT JOIN customer ON city.id = customer.city_id
+LEFT JOIN call ON call.customer_id = customer.id
+GROUP BY 
+	country.id,
+	country.country_name_eng
+HAVING AVG(ISNULL(DATEDIFF(SECOND, call.start_time, call.end_time),0)) > (SELECT AVG(DATEDIFF(SECOND, call.start_time, call.end_time)) FROM call)
+ORDER BY calls DESC, country.id ASC;
+
+
+SELECT country.country_code,country_name, customer.customer_name
+	
+FROM country 
+LEFT JOIN city ON city.country_id = country.id
+LEFT JOIN customer ON city.id = customer.city_id
+LEFT JOIN call ON call.customer_id = customer.id;
+
+select * from country;
+
+
+SELECT 
+	*
+FROM country 
+LEFT JOIN city ON city.country_id = country.id
+LEFT JOIN customer ON city.id = customer.city_id
+LEFT JOIN call ON call.customer_id = customer.id;
+
+-- consulta SELECT compleja	
+SELECT 
+	country.country_name_eng,
+	SUM(CASE WHEN call.id IS NOT NULL THEN 1 ELSE 0 END) AS calls,
+	AVG(ISNULL(DATEDIFF(SECOND, call.start_time, call.end_time),0)) AS avg_difference
+FROM country 
+LEFT JOIN city ON city.country_id = country.id
+LEFT JOIN customer ON city.id = customer.city_id
+LEFT JOIN call ON call.customer_id = customer.id
+GROUP BY 
+	country.id,
+	country.country_name_eng
+ORDER BY calls DESC, country.id ASC;
+
+
+
+
+SELECT 
+    country.country_name_eng,
+    SUM(CASE WHEN call.id IS NOT NULL THEN 1 ELSE 0 END) AS calls,
+    AVG(ISNULL(DATEDIFF(SECOND, call.start_time, call.end_time),0)) AS avg_difference
+FROM country 
+-- we've used left join to include also countries without any call
+LEFT JOIN city ON city.country_id = country.id
+LEFT JOIN customer ON city.id = customer.city_id
+LEFT JOIN call ON call.customer_id = customer.id
+GROUP BY 
+    country.id,
+    country.country_name_eng
+
+HAVING AVG(ISNULL(DATEDIFF(SECOND, call.start_time, call.end_time),0)) > (SELECT AVG(DATEDIFF(SECOND, call.start_time, call.end_time)) FROM call)
+ORDER BY calls DESC, country.id ASC;
+
+
+-- Listado de todas las bases de datos
+SELECT * FROM sys.databases;
+EXEC sp_databases;
+
+
+-- Uso de INFORMATION_SCHEMA para obtener acceso a los datos de las tablas
+
+
+ 
+-- list of all tables in the selected database
+SELECT *
+FROM INFORMATION_SCHEMA.TABLES;
+    
+-- list of all constraints in the selected database
+SELECT *
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS;
+
+
+ 
+-- join tables and constraints data
+SELECT 
+    INFORMATION_SCHEMA.TABLES.TABLE_NAME,
+    INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_NAME,
+    INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_TYPE
+FROM INFORMATION_SCHEMA.TABLES
+INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS ON INFORMATION_SCHEMA.TABLES.TABLE_NAME = INFORMATION_SCHEMA.TABLE_CONSTRAINTS.TABLE_NAME
+ORDER BY
+    INFORMATION_SCHEMA.TABLES.TABLE_NAME ASC,
+    INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_TYPE DESC;
+
+
+
+-- join tables and constraints data
+SELECT 
+    INFORMATION_SCHEMA.TABLES.TABLE_NAME,
+    SUM(CASE WHEN INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'PRIMARY KEY' THEN 1 ELSE 0 END) AS pk,
+    SUM(CASE WHEN INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'UNIQUE' THEN 1 ELSE 0 END) AS uni,
+    SUM(CASE WHEN INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'FOREIGN KEY' THEN 1 ELSE 0 END) AS fk
+FROM INFORMATION_SCHEMA.TABLES
+LEFT JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS ON INFORMATION_SCHEMA.TABLES.TABLE_NAME = INFORMATION_SCHEMA.TABLE_CONSTRAINTS.TABLE_NAME
+GROUP BY
+    INFORMATION_SCHEMA.TABLES.TABLE_NAME
+ORDER BY
+    INFORMATION_SCHEMA.TABLES.TABLE_NAME ASC;
+
+
+
+--	Teoria de conjuntos
+-- list all customers with exactly 3 calls
+select customer.*
+from customer 
+where id in (
+    select customer.id
+    from customer
+    inner join call on customer.id = call.customer_id
+    group by customer.id
+    having count(*) = 3
+);
+    
+-- list all customers from Berlin
+select customer.*
+from customer
+inner join city on customer.city_id = city.id
+where city.city_name = 'Berlin';
+
+
+--operadores union
+
+-- UNION
+-- list all customers with exactly 3 calls
+select customer.*
+from customer 
+where id in (
+    select customer.id
+    from customer
+    inner join call on customer.id = call.customer_id
+    group by customer.id
+    having count(*) = 3
+)
+    
+UNION
+    
+-- list all customers from Berlin
+select customer.*
+from customer
+inner join city on customer.city_id = city.id
+where city.city_name = 'Berlin';
+    
+-- UNION ALL
+-- list all customers with exactly 3 calls
+select customer.*
+from customer 
+where id in (
+    select customer.id
+    from customer
+    inner join call on customer.id = call.customer_id
+    group by customer.id
+    having count(*) = 3
+)
+    
+UNION ALL
+    
+-- list all customers from Berlin
+select customer.*
+from customer
+inner join city on customer.city_id = city.id
+where city.city_name = 'Berlin';
+
+
+-- INTERSECT
+-- list all customers with exactly 3 calls
+select customer.*
+from customer 
+where id in (
+    select customer.id
+    from customer
+    inner join call on customer.id = call.customer_id
+    group by customer.id
+    having count(*) = 3
+)
+    
+
+	--Intersect
+INTERSECT
+    
+select customer.*
+from customer
+inner join city on customer.city_id = city.id
+where city.city_name = 'Berlin';
+
+-- Excepto
+
+-- A EXCEPT B
+-- list all customers with exactly 3 calls
+select customer.*
+from customer 
+where id in (
+    select customer.id
+    from customer
+    inner join call on customer.id = call.customer_id
+    group by customer.id
+    having count(*) = 3
+)
+    
+EXCEPT
+    
+-- list all customers from Berlin
+select customer.*
+from customer
+inner join city on customer.city_id = city.id
+where city.city_name = 'Berlin';
+    
+-- B EXCEPT A
+
+select customer.*
+from customer
+inner join city on customer.city_id = city.id
+where city.city_name = 'Berlin'
+    
+    
+EXCEPT
+    
+-- list all customers with exactly 3 calls
+select customer.*
+from customer 
+where id in (
+    select customer.id
+    from customer
+    inner join call on customer.id = call.customer_id
+    group by customer.id
+    having count(*) = 3
+);
+
+-- CREATE,ALTER,DROP
+
+CREATE FUNCTION east_or_west (
+	@long DECIMAL(9,6)
+)
+RETURNS CHAR(4) AS
+BEGIN
+	DECLARE @return_value CHAR(4);
+	SET @return_value = 'same';
+    IF (@long > 0.00) SET @return_value = 'east';
+    IF (@long < 0.00) SET @return_value = 'west';
+ 
+    RETURN @return_value
+END;
+
+
+SELECT dbo.east_or_west(0) AS argument_0, dbo.east_or_west(-1) AS argument_minus_1, dbo.east_or_west(1) AS argument_plus_1;
+
+
+SELECT *, dbo.east_or_west(city.long) 
+FROM city;
+
+-- funcuion que devuelve la tabla 
+
+CREATE FUNCTION east_from_long (
+	@long DECIMAL(9,6)
+)
+RETURNS TABLE AS
+RETURN
+	SELECT *
+	FROM city
+	WHERE city.long > @long;
+
+
+SELECT dbo.east_or_west(0) AS argument_0, dbo.east_or_west(-1) AS argument_minus_1, dbo.east_or_west(1) AS argument_plus_1;
+
+SELECT *, dbo.east_or_west(city.long) 
+FROM city;
+
+--Procedimientos almacenados
+
+DROP PROCEDURE IF EXISTS p_customer_delete;
+GO
+CREATE PROCEDURE p_customer_delete (@id INT)
+
+
+-- Procedimiento para delete
+AS BEGIN
+  DELETE
+  FROM customer
+  WHERE id = @id;
+END;
+
+EXEC p_customer_delete 6;
+
+DROP VIEW IF EXISTS v_country_all;
+GO
+CREATE VIEW v_country_all AS
+  SELECT * FROM country;
+
+  select * from v_country_all;
+
+
+  INSERT INTO v_country_all (country_name, country_name_eng, country_code) VALUES ('Nova', 'New', 'NEW');
+
+
+  UPDATE v_country_all SET
+  country_name = 'Nova1'
+WHERE id = 8; 
+
+DELETE 
+FROM v_country_all
+WHERE id = 8;
+
+
+DROP TRIGGER IF EXISTS t_country_insert;
+GO
+CREATE TRIGGER t_country_insert ON country INSTEAD OF INSERT
+AS BEGIN
+    DECLARE @country_name CHAR(128);
+    DECLARE @country_name_eng CHAR(128);
+    DECLARE @country_code  CHAR(8);
+    SELECT @country_name = country_name, @country_name_eng = country_name_eng, @country_code = country_code FROM INSERTED;
+    IF @country_name IS NULL SET @country_name = @country_name_eng;
+    IF @country_name_eng IS NULL SET @country_name_eng = @country_name;
+    INSERT INTO country (country_name, country_name_eng, country_code) VALUES (@country_name, @country_name_eng, @country_code);
+END;
+
+SELECT * FROM country;
+INSERT INTO country (country_name_eng, country_code) VALUES ('United Kingdom', 'UK');
+SELECT * FROM country;
+
+
+
+DROP TRIGGER IF EXISTS t_country_delete;
+GO
+CREATE TRIGGER t_country_delete ON country INSTEAD OF DELETE
+AS BEGIN
+    DECLARE @id INT;
+    DECLARE @count INT;
+    SELECT @id = id FROM DELETED;
+    SELECT @count = COUNT(*) FROM city WHERE country_id = @id;
+    IF @count = 0
+        DELETE FROM country WHERE id = @id;
+    ELSE
+        THROW 51000, 'can not delete - country is referenced in other tables', 1;
+END;
+
+DELETE FROM country WHERE id = 6;
+
+DELETE FROM country WHERE id = 1;
+
+DROP TRIGGER IF EXISTS t_country_update;
+GO
+CREATE TRIGGER t_country_update ON country INSTEAD OF DELETE
+AS BEGIN
+    DECLARE @id INT;
+    DECLARE @count INT;
+    SELECT @id = id FROM DELETED;
+    SELECT @count = COUNT(*) FROM city WHERE country_id = @id;
+    IF @count = 0
+        DELETE FROM country WHERE id = @id;
+    ELSE
+        THROW 51000, 'can not delete - country is referenced in other tables', 1;
+END;
+
+-- Practice SQL Queries
+
+SELECT country.country_name_eng, COUNT(city.id) AS number_of_cities
+FROM country
+LEFT JOIN city ON country.id = city.country_id
+GROUP BY country.id, country.country_name_eng
+ORDER BY country.country_name_eng ASC;
+
+SELECT 
+  customer.id,
+  customer.customer_name,
+  COUNT(call.id) AS calls
+FROM customer
+INNER JOIN call ON call.customer_id = customer.id
+GROUP BY
+  customer.id,
+  customer.customer_name
+HAVING COUNT(call.id) > (
+  SELECT CAST(COUNT(*) AS DECIMAL(5,2)) / CAST(COUNT(DISTINCT customer_id) AS DECIMAL(5,2)) FROM call
+);
+
+
+-- SQL Query examples
+SELECT *
+FROM call
+ORDER BY
+    call.employee_id ASC,
+    call.start_time ASC;
+
+	SELECT 
+    call.*,
+    DATEDIFF("SECOND", call.start_time, call.end_time) AS call_duration
+FROM call
+ORDER BY
+    call.employee_id ASC,
+    call.start_time ASC;
+
+
+	SELECT 
+    employee.id,
+    employee.first_name,
+    employee.last_name,
+    SUM(DATEDIFF("SECOND", call.start_time, call.end_time)) AS call_duration_sum
+FROM call
+INNER JOIN employee ON call.employee_id = employee.id
+GROUP BY
+    employee.id,
+    employee.first_name,
+    employee.last_name
+ORDER BY
+    employee.id ASC;
+
+
+	SELECT 
+    employee.id,
+    employee.first_name,
+    employee.last_name,
+    call.start_time, 
+    call.end_time,
+    DATEDIFF("SECOND", call.start_time, call.end_time) AS call_duration,
+    duration_sum.call_duration_sum,
+    CAST( CAST(DATEDIFF("SECOND", call.start_time, call.end_time) AS DECIMAL(7,2)) / CAST(duration_sum.call_duration_sum AS DECIMAL(7,2)) AS DECIMAL(4,4)) AS call_percentage
+FROM call
+INNER JOIN employee ON call.employee_id = employee.id
+INNER JOIN (
+    SELECT 
+        employee.id,
+        SUM(DATEDIFF("SECOND", call.start_time, call.end_time)) AS call_duration_sum
+    FROM call
+    INNER JOIN employee ON call.employee_id = employee.id
+    GROUP BY
+        employee.id
+) AS duration_sum ON employee.id = duration_sum.id
+ORDER BY
+    employee.id ASC,
+    call.start_time ASC;
+
+
+
+
+	-- 1 -- report (including dynamic PIVOT)
+DECLARE 
+    @columns	NVARCHAR(MAX) = '', 
+    @query		NVARCHAR(MAX) = '';
+    
+-- get all column names for the table we need for pivot
+SELECT 
+    @columns += QUOTENAME(TRIM(co.outcome_text)) + ','
+FROM 
+    call_outcome co
+ORDER BY 
+    co.outcome_text;
+    
+-- remove "," from the end of the string
+SET @columns = LEFT(@columns, LEN(@columns) - 1);
+    
+-- dynamic SQL query
+SET @query ='
+SELECT * FROM   
+(
+    SELECT
+        -- rc.city_id,
+        rc.city_name,
+        -- rc.call_outcome_id,
+        rc.outcome_text,
+        rd.call_duration
+    FROM
+    (
+        SELECT 
+            c.id AS city_id,
+            c.city_name,
+            co.id AS call_outcome_id,
+            co.outcome_text
+        FROM call_outcome co
+        CROSS JOIN city c
+    ) rc
+    
+    LEFT JOIN
+    
+    (
+        SELECT 
+            ci.id AS city_id,
+            co.id AS call_outcome_id,
+            DATEDIFF(SECOND, c.start_time, c.end_time) AS call_duration
+        FROM call c
+        INNER JOIN call_outcome co ON c.call_outcome_id = co.id
+        INNER JOIN customer cu ON c.customer_id = cu.id
+        INNER JOIN city ci ON cu.city_id = ci.id
+    ) rd ON rc.city_id = rd.city_id AND rc.call_outcome_id = rd.call_outcome_id
+) report_data 
+PIVOT(
+    COUNT(call_duration) 
+    FOR outcome_text IN ('+ @columns +')
+) AS pivot_table;';
+    
+-- execute dynamic query
+EXECUTE sp_executesql @query;
+
+
+
+
+-- 2 -- report categories & data (without pivot)
+SELECT
+    rc.city_id,
+    rc.city_name,
+    rc.call_outcome_id,
+    rc.outcome_text,
+    rd.call_duration
+FROM
+(
+    SELECT 
+        c.id AS city_id,
+        c.city_name,
+        co.id AS call_outcome_id,
+        co.outcome_text
+    FROM call_outcome co
+    CROSS JOIN city c
+) rc
+    
+LEFT JOIN
+    
+(
+    SELECT 
+        ci.id AS city_id,
+        co.id AS call_outcome_id,
+        DATEDIFF(SECOND, c.start_time, c.end_time) AS call_duration
+    FROM call c
+    INNER JOIN call_outcome co ON c.call_outcome_id = co.id
+    INNER JOIN customer cu ON c.customer_id = cu.id
+    INNER JOIN city ci ON cu.city_id = ci.id
+) rd ON rc.city_id = rd.city_id AND rc.call_outcome_id = rd.call_outcome_id
+    
+ORDER BY
+    rc.city_id,
+    rc.call_outcome_id;
+
+
+	DECLARE @num1 INTEGER;
+DECLARE @num2 INTEGER;
+ 
+SET @num1 = 20;
+SET @num2 = 30;
+ 
+IF (@num1 > @num2)
+  PRINT '1st number is greater than 2nd number.'
+ELSE IF (@num2 > @num1)
+  PRINT '2nd number is greater than 1st number.'
+ELSE 
+  PRINT 'The numbers are equal.';
+
+
+  DECLARE @num1 INTEGER;
+DECLARE @num2 INTEGER;
+ 
+SET @num1 = 100;
+SET @num2 = 30;
+ 
+IF (@num1 > @num2) BEGIN
+  PRINT '1st number is greater than 2nd number.'
+  IF (@num1 > 75) 
+    PRINT '1st number is greater than 75.' 
+  ELSE IF (@num1 > 50) 
+    PRINT '1st number is greater than 50.' 
+  ELSE 
+    PRINT '1st number is less than or equal to 50.';
+END
+ELSE IF (@num2 > @num1)
+  PRINT '2nd number is greater than 1st number.'
+ELSE 
+  PRINT 'The numbers are equal.';
+
+
+  DECLARE @i INTEGER;
+SET @i = 1;
+ 
+WHILE @i <= 10
+BEGIN
+   PRINT CONCAT('Pass...', @i);
+   SET @i = @i + 1;
+END;
+
+
+DECLARE @i INTEGER;
+SET @i = 1;
+ 
+WHILE @i <= 10
+BEGIN
+   PRINT CONCAT('Pass...', @i);
+   IF @i = 8 BREAK;
+   SET @i = @i + 1;
+END;
+
+DECLARE @i INTEGER;
+SET @i = 1;
+ 
+WHILE @i <= 10
+BEGIN
+   PRINT CONCAT('Pass...', @i);
+   IF @i = 9 CONTINUE;
+   SET @i = @i + 1;
+END;
+
+
+DECLARE @date_start DATE;
+DECLARE @date_end DATE;
+DECLARE @loop_date DATE;
+ 
+SET @date_start = '2020/11/11';
+SET @date_end = '2020/12/12';
+ 
+SET @loop_date = @date_start;
+ 
+WHILE @loop_date <= @date_end
+BEGIN
+   PRINT @loop_date;
+   SET @loop_date = DATEADD(DAY, 1, @loop_date);
+END;
+
+DROP TABLE IF EXISTS #dates;
+CREATE TABLE #dates (
+  report_date DATE
+);
+ 
+DECLARE @date_start DATE;
+DECLARE @date_end DATE;
+DECLARE @loop_date DATE;
+ 
+SET @date_start = '2020/11/11';
+SET @date_end = '2020/12/12';
+ 
+SET @loop_date = @date_start;
+ 
+WHILE @loop_date <= @date_end
+BEGIN
+   INSERT INTO #dates (report_date) VALUES (@loop_date);
+   SET @loop_date = DATEADD(DAY, 1, @loop_date);
+END;
+ 
+SELECT * FROM #dates;
+DROP TABLE IF EXISTS #dates;
+
+-- declare variables used in cursor
+DECLARE @table_name VARCHAR(128);
+DECLARE @table_names_5 VARCHAR(128);
+ 
+-- declare cursor
+DECLARE cursor_table_names CURSOR FOR
+  SELECT TOP 5 TABLE_NAME 
+  FROM INFORMATION_SCHEMA.TABLES
+  ORDER BY TABLE_NAME ASC;
+ 
+SET @table_names_5 = 'first 5 tables are: '
+-- open cursor
+OPEN cursor_table_names;
+ 
+-- loop through a cursor
+FETCH NEXT FROM cursor_table_names INTO @table_name;
+WHILE @@FETCH_STATUS = 0
+    BEGIN
+    IF @table_names_5 = 'first 5 tables are: '
+      SET @table_names_5 = CONCAT(@table_names_5, @table_name)
+    ELSE
+      SET @table_names_5 = CONCAT(@table_names_5, ', ', @table_name);     
+    FETCH NEXT FROM cursor_table_names INTO @table_name;
+    END;
+PRINT @table_names_5;
+ 
+
+
+
+
+
+ 
+-- join tables and constraints data
+SELECT 
+  INFORMATION_SCHEMA.TABLES.TABLE_NAME,
+  SUM(CASE WHEN INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'PRIMARY KEY' THEN 1 ELSE 0 END) AS pk,
+  SUM(CASE WHEN INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'UNIQUE' THEN 1 ELSE 0 END) AS uni,
+  SUM(CASE WHEN INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'FOREIGN KEY' THEN 1 ELSE 0 END) AS fk
+FROM INFORMATION_SCHEMA.TABLES
+LEFT JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS ON INFORMATION_SCHEMA.TABLES.TABLE_NAME = INFORMATION_SCHEMA.TABLE_CONSTRAINTS.TABLE_NAME
+GROUP BY
+  INFORMATION_SCHEMA.TABLES.TABLE_NAME
+ORDER BY
+  INFORMATION_SCHEMA.TABLES.TABLE_NAME ASC;
+
+
+  SELECT 
+  single_employee.id,
+  single_employee.first_name,
+  single_employee.last_name,
+  single_employee.call_duration_avg,
+  single_employee.call_duration_avg - avg_all.call_duration_avg AS avg_difference
+FROM
+(
+  SELECT 
+    1 AS join_id,
+    employee.id,
+    employee.first_name,
+    employee.last_name,
+    AVG(DATEDIFF("SECOND", call.start_time, call.end_time)) AS call_duration_avg
+  FROM call
+  INNER JOIN employee ON call.employee_id = employee.id
+  GROUP BY
+    employee.id,
+    employee.first_name,
+    employee.last_name
+) single_employee
+ 
+  INNER JOIN
+ 
+(
+  SELECT
+    1 AS join_id,
+    AVG(DATEDIFF("SECOND", call.start_time, call.end_time)) AS call_duration_avg
+  FROM call
+) avg_all ON avg_all.join_id = single_employee.join_id;
