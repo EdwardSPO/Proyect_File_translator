@@ -2,27 +2,31 @@
     <div>
       <Header />
            
-            <div class="container izquierda">
-               <button class="btn btn-primary" v-on:click="nuevo()">New User</button>
+            <div>
+               <button v-on:click="nuevo()">New User</button>
                <br>
 
-                <table class="table table-hover">
+                <table>
                 <thead>
                     <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">LastName</th>
-                    <th scope="col">Email</th> 
-                      <th scope="col">Password</th> 
+                        <th >Id</th>
+                        <th >Name</th>
+                        <th >LastName</th>
+                    <th >Email</th> 
+                      <th>Password</th> 
                     
                     
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row"></th>
-                        <td></td>
-                        <td></td>
+               
+                        <tr v-for="user in users" :key="user.id" >
+                        <th >{{ user.id}}</th>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.password }}</td>
+    
                       
                               
                     </tr>
@@ -43,11 +47,33 @@
 <script>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import axios from 'axios';
+import global from '../../config.js'
 
 export default {
-       components:{
+  name: "Dashboard",
+     components:{
         Header,
         Footer
+    },
+     data(){
+        return{
+            users:null
+        
+    
+        }
+        
+    },
+    mounted:function(){
+        let direccion = global.API_USERS;
+        axios.get( direccion).then(data =>{
+         
+           this.users=data.data;
+
+      
+
+      
+        })
     }
 }
 </script>
