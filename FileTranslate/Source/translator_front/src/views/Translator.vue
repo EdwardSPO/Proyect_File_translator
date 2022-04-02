@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-const url = "http://localhost:5000/api/File/Upload?";
+const url = "https://localhost:5024/api/File/Upload?";
 
 
 
@@ -177,6 +177,6 @@ h1 {
     position:absolute;
  top:435px;
  left:1310px;
- color:rgb(5, 83, 5);
+ background-color:rgb(5, 83, 5);
 }
 </style>

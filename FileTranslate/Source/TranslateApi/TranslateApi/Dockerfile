@@ -1,30 +1,36 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+FROM python:3.8.12-slim-bullseye
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+ARG with_models=false
+ARG models=
+
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-WORKDIR /src
-COPY ["TranslateApi/TranslateApi.csproj", "TranslateApi/"]
-RUN dotnet restore "TranslateApi/TranslateApi.csproj"
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -qq \
+  && apt-get -qqq install --no-install-recommends -y libicu-dev pkg-config gcc g++ \
+  && apt-get clean \
+  && rm -rf /var/lib/apt
+
+RUN pip install --upgrade pip
+
 COPY . .
-WORKDIR "/src/TranslateApi"
-RUN dotnet build "TranslateApi.csproj" -c Release -o /app/build
 
-FROM build AS publish
-RUN dotnet publish "TranslateApi.csproj" -c Release -o /app/publish
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TranslateApi.dll"]
+RUN if [ "$with_models" = "true" ]; then  \
+        # install only the dependencies first
+        pip install -e .;  \
+        # initialize the language models
+        if [ ! -z "$models" ]; then \
+                  ./install_models.py --load_only_lang_codes "$models";   \
+        else \
+                  ./install_models.py;  \
+        fi \
+    fi
+# Install package from source code
+RUN pip install . \
+  && pip cache purge
 
-FROM ubuntu:lastest
+ Run ltmanage keys add 120
 
-RUN apt update
-
-RUN apt install python3 -y
-
-RUN docker run -ti --rm -p 5000:5000 libretranslate/libretranslate
+EXPOSE 5000
+ENTRYPOINT [ "libretranslate", "--host", "0.0.0.0" ]

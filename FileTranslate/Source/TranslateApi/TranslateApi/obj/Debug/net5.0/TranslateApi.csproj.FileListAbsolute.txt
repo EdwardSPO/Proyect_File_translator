@@ -51,3 +51,8 @@ C:\Users\SANTI\source\repos\TranslateApi\TranslateApi\bin\Debug\net5.0\Microsoft
 C:\Users\SANTI\source\repos\TranslateApi\TranslateApi\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\SANTI\source\repos\TranslateApi\TranslateApi\obj\Debug\net5.0\TranslateApi.Properties.Resources.resources
 C:\Users\SANTI\source\repos\TranslateApi\TranslateApi\obj\Debug\net5.0\TranslateApi.csproj.GenerateResource.cache
+C:\Users\SANTI\source\repos\TranslateApi\TranslateApi\bin\Debug\net5.0\out\web.config
+C:\Users\SANTI\source\repos\TranslateApi\TranslateApi\bin\Debug\net5.0\out\appsettings.Development.json
+C:\Users\SANTI\source\repos\TranslateApi\TranslateApi\bin\Debug\net5.0\out\appsettings.json
+C:\Users\SANTI\source\repos\TranslateApi\TranslateApi\bin\Debug\net5.0\out\TranslateApi.deps.json
+C:\Users\SANTI\source\repos\TranslateApi\TranslateApi\bin\Debug\net5.0\out\TranslateApi.runtimeconfig.json
