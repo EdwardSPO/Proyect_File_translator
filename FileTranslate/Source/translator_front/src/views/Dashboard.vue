@@ -1,19 +1,17 @@
 <template>
     <div>
       <Header />
-           
-            <div>
-               <button v-on:click="nuevo()">New User</button>
-               <br>
-
-                <table>
+           <div class="container izquierda">
+               <button class="btn btn-primary"  v-on:click="nuevo()">New User</button>
+                          
+                 <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th >Id</th>
-                        <th >Name</th>
-                        <th >LastName</th>
-                    <th >Email</th> 
-                      <th>Password</th> 
+                        <th scope="col" >Id</th>
+                        <th scope="col" >Name</th>
+                        <th scope="col">LastName</th>
+                    <th scope="col">Email</th> 
+                      <th scope="col">Password</th> 
                     
                     
                     </tr>
@@ -21,7 +19,7 @@
                 <tbody>
                
                         <tr v-for="user in users" :key="user.id" >
-                        <th >{{ user.id}}</th>
+                        <th scope="row" >{{ user.id}}</th>
                         <td>{{ user.name }}</td>
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.email }}</td>
