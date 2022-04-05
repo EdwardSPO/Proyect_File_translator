@@ -2,7 +2,7 @@
     <div>
       <Header />
            <div class="container izquierda">
-               <button class="btn btn-primary"  v-on:click="nuevo()">New User</button>
+               <button class="btn btn-primary  fw-bold float-end"  v-on:click="nuevo()">New User</button>
                           
                  <table class="table table-hover">
                 <thead>
@@ -11,34 +11,20 @@
                         <th scope="col" >Name</th>
                         <th scope="col">LastName</th>
                     <th scope="col">Email</th> 
-                      <th scope="col">Password</th> 
-                    
-                    
+                      <th scope="col">Password</th>                                
                     </tr>
                 </thead>
-                <tbody>
-               
+                <tbody>               
                         <tr v-for="user in users" :key="user.id" >
                         <th scope="row" >{{ user.id}}</th>
                         <td>{{ user.name }}</td>
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.password }}</td>
-    
-                      
-                              
-                    </tr>
-            
+                 </tr>  
                 </tbody>
                 </table>
-
-
-
-
-            </div>
-
-            
-
+            </div>            
         <Footer />
     </div>
 </template>
@@ -56,26 +42,21 @@ export default {
     },
      data(){
         return{
-            users:null
-        
-    
-        }
-        
+            users:null            
+        }        
+    },
+       methods:{
+     nuevo(){
+           this.$router.push('/nuevo');
+     }
     },
     mounted:function(){
         let direccion = global.API_USERS;
         axios.get( direccion).then(data =>{
-         
-           this.users=data.data;
-
-      
-
-      
+           this.users=data.data;      
         })
     }
 }
 </script>
-
-<style  scoped>
-  
+<style  scoped>  
 </style>

@@ -33,8 +33,7 @@
 
                                   <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.password.required" >The field is required </div>
                             <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.password.minLength" >The lastName must have at least 8 characters  </div>     
-                            
-                            
+                                                        
                         </div>                   
                         <div class="col-12">
                      
@@ -109,7 +108,7 @@ export default {
            
        
         salir(){
-            this.$router.push("/");
+            this.$router.push("/dashboard");
         },
         makeToast(titulo,texto,tipo) {
             this.toastCount++
