@@ -5,6 +5,7 @@ bin
 obj
 csproj.user
 .vs
+config.js
 
 # local env files
 .env.local
