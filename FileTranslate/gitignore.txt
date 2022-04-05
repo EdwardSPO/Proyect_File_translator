@@ -1,3 +1,7 @@
+.vscode
+node_modules
+kl
+
 #config
 config.js
 
@@ -358,3 +362,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+
