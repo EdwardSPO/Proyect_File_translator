@@ -16,17 +16,6 @@ namespace ApiUsers.Controller
         {
             _userManager = userManager;
         }
-
-        [HttpGet]
-        public async Task<ActionResult> GetAll()
-        {
-            var usersResult = await _userManager.GetUsersAsync();
-            if (usersResult.Success)
-            {
-                return Ok(usersResult.Value);
-            }
-            return NotFound(usersResult.Errors);
-        }
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {

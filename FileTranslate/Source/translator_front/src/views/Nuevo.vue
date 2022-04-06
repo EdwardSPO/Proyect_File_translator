@@ -33,7 +33,8 @@
 
                                   <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.password.required" >The field is required </div>
                             <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.password.minLength" >The lastName must have at least 8 characters  </div>     
-                                                        
+                            
+                            
                         </div>                   
                         <div class="col-12">
                      
@@ -59,7 +60,7 @@ import Footer from '@/components/Footer.vue'
 import axios from 'axios';
 import Swal from 'sweetalert';
 import {required, minLength , email} from 'vuelidate/lib/validators';
-import global from '../../config.js'
+
 export default {
     name:"Nuevo",
    
@@ -67,11 +68,11 @@ export default {
         return {
             submited: false,
            form:{
-              "name": "",
-              "lastName": "",
-              "email":"",
-              "password":"",
-               errors: []
+               "name": "",
+               "lastName": "",
+             "email":"",
+             "password":"",
+             errors: []
            
           },
         }
@@ -84,13 +85,17 @@ export default {
     methods:{
        
         guardar(){
-          
-            axios.post(global.API_USERS,this.form)
+            
+            axios.post("http://localhost:36777/api/user",this.form)
             .then(data =>{
-                this.makeToast("Hecho","Usuario creado","success"+data);
+                console.log(data);
+                console.log(this.form);
+                this.makeToast("Hecho","Usuario creado","success");
                 this.$router.push("/");
             }).catch( e =>{
-                console.log(e);                      
+                console.log(e);
+                
+               
                swal({title: "Warning",  text: "Email already exists",
                    icon: "warning",
                    })
@@ -108,7 +113,7 @@ export default {
            
        
         salir(){
-            this.$router.push("/dashboard");
+            this.$router.push("/");
         },
         makeToast(titulo,texto,tipo) {
             this.toastCount++

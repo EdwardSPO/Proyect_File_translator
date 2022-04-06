@@ -7,7 +7,6 @@ namespace ApiUsers.Core.UserManager
 {
     public interface IUserManager
     {
-        Task<ResultHelper<IEnumerable<User>>> GetUsersAsync();
         Task<ResultHelper<User>> GetByIdAsync(int id);
         Task<ResultHelper<User>> CreateAsync(User user);
        
