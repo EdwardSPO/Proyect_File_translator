@@ -97,6 +97,41 @@ namespace ApiUsers.Core.UserManager
             return resultado;
         }
 
+        public async Task<ResultHelper<User>> LoginAsync(User user)
+        {
+            var resultado = new ResultHelper<User>();
+            try
+            {
+                User nuevaUser = new User
+                {               
+                    Email = user.Email,
+                    Password = Encrypt.GetSHA256(user.Password)
+
+                };
+
+                var vali = (from d in _context.Users
+                            where d.Email == user.Email
+                            select d).FirstOrDefault();
+
+                if (vali != null)
+                {
+                    string error = _ERROR_EMAIL;
+                    resultado.AddError(error);
+                }
+                else
+                {
+                    _context.Users.Add(nuevaUser);
+                 
+                    resultado.Value = nuevaUser;
+                }
+            }
+            catch (Exception e)
+            {
+                resultado.AddError(e.Message);
+            }
+            return resultado;
+        }
+
 
     }
 }
