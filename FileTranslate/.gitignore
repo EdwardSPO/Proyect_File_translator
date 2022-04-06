@@ -1,6 +1,7 @@
 #config
 config.js
 
+
 .DS_Store
 node_modules
 /dist
@@ -8,6 +9,7 @@ bin
 obj
 csproj.user
 .vs
+
 
 # local env files
 .env.local
