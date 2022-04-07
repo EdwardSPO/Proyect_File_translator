@@ -48,13 +48,13 @@ namespace ApiUsers.Controller
             return BadRequest(result.Errors);
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<ActionResult> PostLogin(User user)
         {
             var result = await _userManager.LoginAsync(user);
             if (result.Success)
             {
-                return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
+                return Ok("Inicio");
             }
             return BadRequest(result.Errors);
         }

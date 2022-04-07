@@ -105,24 +105,26 @@ namespace ApiUsers.Core.UserManager
                 User nuevaUser = new User
                 {               
                     Email = user.Email,
-                    Password = Encrypt.GetSHA256(user.Password)
+                    Password = user.Password
 
                 };
 
                 var vali = (from d in _context.Users
-                            where d.Email == user.Email
+                            where d.Email == user.Email && d.Password == user.Password
                             select d).FirstOrDefault();
 
                 if (vali != null)
                 {
-                    string error = _ERROR_EMAIL;
-                    resultado.AddError(error);
+
+                    _context.Users.Add(nuevaUser);
+
+                    resultado.Value = nuevaUser;
                 }
                 else
                 {
-                    _context.Users.Add(nuevaUser);
-                 
-                    resultado.Value = nuevaUser;
+             
+                    string error = _ERROR_EMAIL;
+                    resultado.AddError(error);
                 }
             }
             catch (Exception e)
