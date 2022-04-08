@@ -105,10 +105,10 @@ namespace ApiUsers.Core.UserManager
                 User nuevaUser = new User
                 {               
                     Email = user.Email,
-                    Password = user.Password
+                    Password = user.Password = Encrypt.GetSHA256(user.Password)
 
                 };
-
+              
                 var vali = (from d in _context.Users
                             where d.Email == user.Email && d.Password == user.Password
                             select d).FirstOrDefault();

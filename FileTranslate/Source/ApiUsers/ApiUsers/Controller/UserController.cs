@@ -54,9 +54,9 @@ namespace ApiUsers.Controller
             var result = await _userManager.LoginAsync(user);
             if (result.Success)
             {
-                return Ok("Inicio");
+                return Ok("Ok");
             }
-            return BadRequest(result.Errors);
+            return Ok(result.Errors);
         }
     }
 }
