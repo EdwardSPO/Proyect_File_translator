@@ -1,18 +1,18 @@
 <template>
-       <div class="home">
+     <div class="home">
       <div class="wrapper fadeInDown">
               <div id="formContent">
                 <!-- Tabs Titles -->
 
                 <!-- Icon -->
                 <div class="fadeIn first">
-                  <img src="" alt="User Icon" />
+                  <img src="" id="icon" alt="User Icon" />
                 </div>
 
                 <!-- Login Form -->
                 <form v-on:submit.prevent="login">
-                  <input type="text" class="fadeIn second" name="login" placeholder="email" >
-                  <input type="text" class="fadeIn third" name="login" placeholder="Password">
+                  <input type="text" id="login" class="fadeIn second" name="login" placeholder="email" v-model="email">
+                  <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password" v-model="password">
                   <input type="submit" class="fadeIn fourth" value="Log In">
                 </form>
 
@@ -26,11 +26,41 @@
     
 </template>
 <script>
+import axios from 'axios';
+export default {
+  name: 'Login',
+  components: {
+  },
+  data: function(){
+    return {
+      email: "",
+      password: ""
+    
+    }
+  },
+  methods:{
+    login(){
+        let json = {
+          "email" : this.email,
+          "password": this.password
+        };
+        axios.post('https://localhost:44394/api/user/login', json)
+        .then( data =>{
+           if(data.data == "Ok"){
 
+             this.$router.push('dashboard');
+           }else{
+               console.log(data);
+             this.error = true;
+           
+           }
+        })
+    }
+  }
+}
 </script>
 
 <style scoped>
-
 /* BASIC */
 html {
   background-color: #56baed;
@@ -247,6 +277,3 @@ input[type=text]:placeholder {
   width:60%;
 }
 </style>
-
-
-
