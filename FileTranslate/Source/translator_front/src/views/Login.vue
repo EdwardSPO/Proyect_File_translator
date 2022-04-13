@@ -11,8 +11,8 @@
 
                 <!-- Login Form -->
                 <form v-on:submit.prevent="login">
-                  <input type="text" id="login" class="fadeIn second" name="login" placeholder="email" v-model="email">
-                  <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password" v-model="password">
+                  <input type="text" id="login" class="fadeIn second" name="login" placeholder="email" v-model="email" required>
+                  <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password" v-model="password" required>
                   <input type="submit" class="fadeIn fourth" value="Log In">
                 </form>
 
@@ -27,6 +27,7 @@
 </template>
 <script>
 import axios from 'axios';
+import swal from 'sweetalert';
 export default {
   name: 'Login',
   components: {
@@ -50,7 +51,10 @@ export default {
 
              this.$router.push('dashboard');
            }else{
-               console.log(data);
+             console.log(data);
+                swal({title: "Warning",  text: "Email already exists",
+                   icon: "warning",
+                   })              
              this.error = true;
            
            }

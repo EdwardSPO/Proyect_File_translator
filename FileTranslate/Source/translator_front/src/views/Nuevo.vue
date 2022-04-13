@@ -57,7 +57,7 @@
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import axios from 'axios';
-import Swal from 'sweetalert';
+import swal from 'sweetalert';
 import {required, minLength , email} from 'vuelidate/lib/validators';
 import global from '../../config.js'
 export default {
