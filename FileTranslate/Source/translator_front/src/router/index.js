@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Login from '../views/Login.vue'
 import Nuevo from '../views/Nuevo.vue'
+import Translator from '../views/Translator'
 
 Vue.use(VueRouter)
 
@@ -13,6 +14,11 @@ const routes = [
     name: 'Login',
     component: Login
   },
+  {
+    path: '/translator',
+    name: 'Translator',
+    component: Translator
+},
   {
     path: '/dashboard',
     name: 'Dashboard',
