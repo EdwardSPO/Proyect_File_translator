@@ -52,7 +52,7 @@ export default {
              this.$router.push('translator');
            }else{
              console.log(data);
-                swal({title: "Warning",  text: "Email already exists",
+                swal({title: "Warning",  text: "The email or password is not correct",
                    icon: "warning",
                    })              
              this.error = true;

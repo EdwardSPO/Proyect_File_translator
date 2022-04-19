@@ -88,7 +88,7 @@ export default {
             axios.post(global.API_USERS,this.form)
             .then(data =>{
                 this.makeToast("Hecho","Usuario creado","success"+data);
-                this.$router.push("/");
+                this.$router.push("/dashboard");
             }).catch( e =>{
                 console.log(e);                      
                swal({title: "Warning",  text: "Email already exists",
