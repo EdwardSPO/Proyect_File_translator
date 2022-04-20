@@ -1,0 +1,54 @@
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
+using MiWebApi.Data;
+using MiWebApi.Models;
+
+
+namespace Employees2._1.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class EmployeesController : ControllerBase
+    {
+        private readonly DataContext _context;
+
+
+        [HttpPost]
+
+        public async Task<IActionResult> Post(Employee employee)
+        {
+            //string Names = employee.Names;
+            //string Surnames = employee.Surnames;
+
+            //if (string.IsNullOrEmpty(Names))
+            //{
+            //    throw new ArgumentException($"the {Names} field is required");
+            //};
+            //if (string.IsNullOrEmpty(Surnames))
+            //{
+            //    throw new ArgumentException($"the {Surnames} field is required");
+            //}
+
+
+
+            employee.Email = employee.Names + employee.Surnames.Remove(1) + "@nserio.com";
+            try
+            {
+                _context.Add(employee);
+                await _context.SaveChangesAsync();
+                return Ok("Datos Guardados ");
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+
+
+
+        }
+
+    }
+}
