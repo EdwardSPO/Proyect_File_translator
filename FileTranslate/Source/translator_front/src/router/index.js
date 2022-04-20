@@ -20,6 +20,11 @@ const routes = [
     component: Login
   },
   {
+    path: '/translator',
+    name: 'Translator',
+    component: Translator
+},
+  {
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard

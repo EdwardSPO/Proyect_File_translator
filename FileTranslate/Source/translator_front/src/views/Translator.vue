@@ -1,7 +1,14 @@
 <template>
   <div>
+<<<<<<< HEAD
     <h1>{{titulo}}</h1>
     <div class="header"></div>
+=======
+
+            <Header />
+    <h1>{{titulo}}</h1>
+   
+>>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
 
     <div class="container">
       <div class="mb-3">
@@ -39,24 +46,40 @@
           type="button"
           value="cargar"
           class="flex-wrap btn btn-success"
+<<<<<<< HEAD
           @click="saveEmployee($event)"
+=======
+          @click="submitForm($event)"
+>>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
         >
           Traducir
         </button>
       </div>
     </div>
+<<<<<<< HEAD
   </div>
 </template>
 <script>
 const url = "https://localhost:5024/api/File/Upload?";
 const urlTr = "https://localhost:5024/api/File/Translate";
 
+=======
+        
+  </div>
+  
+</template>
+<script>
+const url = "https://localhost:5024/api/File/Upload?";
+const urlTr = "https://localhost:5024/api/File/Translate?";
+import Header from '@/components/Header.vue'
+>>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
 
 
 export default {
   data() {
     return {
       titulo: "Traductor",
+<<<<<<< HEAD
       uploadURL: url + "subDirectory=file",
       urlAzerbaiyan: urlTr + "?source=ar&target=en",
       urlChino: urlTr + "source=ch" + "target=en",
@@ -64,6 +87,18 @@ export default {
       isCreate: false,
     };
   },
+=======
+      uploadURL: url + "subDirectory=File",
+      urlAzerbaiyan: urlTr + "source=az",
+      urlChino: urlTr + "target=en",
+      file: ""
+    };
+  },
+     components:{
+        Header
+      
+    },
+>>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
   methods: {
     
     getFile(event) {
@@ -85,6 +120,7 @@ export default {
       console.log(this.file);
     }
     },
+<<<<<<< HEAD
    
    
      submitForm(event) {
@@ -111,7 +147,8 @@ export default {
          
      
      },
-       getAzerbaiyan(event) {
+=======
+    submitForm(event) {
         var barra = document.getElementById('progress')
       barra.value +=100
     
@@ -125,12 +162,39 @@ export default {
         },
       };
       this.$http
+        .post(this.uploadURL,formData,config)
+        .then(function (response) {
+          if (response.status === 200) {
+            console.log(response.data);
+          }
+        });
+    },
+>>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
+       getAzerbaiyan(event) {
+        var barra = document.getElementById('progress')
+      barra.value +=100
+    
+      event.preventDefault();
+      let formData = new FormData();
+<<<<<<< HEAD
+      formData.append("file", this.file);
+=======
+      formData.append("file", this.source);
+>>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          
+        },
+      };
+      this.$http
         .post(this.urlAzerbaiyan,formData,config)
         .then(function (response) {
           if (response.status === 200) {
             console.log(response.data);
           }
         });
+<<<<<<< HEAD
         
 
     }, 
@@ -144,6 +208,31 @@ export default {
      
 
    
+=======
+    },
+
+       getChino(event) {
+        var barra = document.getElementById('progress')
+      barra.value +=100
+    
+      event.preventDefault();
+      let formData = new FormData();
+      formData.append("file", this.target);
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          
+        },
+      };
+      this.$http
+        .post(this.urlChino,formData,config)
+        .then(function (response) {
+          if (response.status === 200) {
+            console.log(response.data);
+          }
+        });
+    },
+>>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
 
     
   
