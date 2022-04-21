@@ -26,10 +26,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.3.0" />
-<<<<<<< HEAD
-=======
-    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
->>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
   </ItemGroup>
 
   <ItemGroup>

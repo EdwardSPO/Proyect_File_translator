@@ -1,14 +1,7 @@
 <template>
   <div>
-<<<<<<< HEAD
     <h1>{{titulo}}</h1>
     <div class="header"></div>
-=======
-
-            <Header />
-    <h1>{{titulo}}</h1>
-   
->>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
 
     <div class="container">
       <div class="mb-3">
@@ -22,10 +15,10 @@
 
       <div class="flex-wrap input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">Idioma</label>
-        <select class="form-select" id="inputGroupSelect01">
+        <select class="form-select" id="inputGroupSelect01" >
           <option selected>Seleccione el idioma</option>
           <option value="1" v-on:change="getAzerbaiyan()">Azerbaiyán a Ingles</option>
-          <option value="2" v-on:change="getChino()">Chino a Ingles</option>
+          <option value="2" v-on:change="getArabe()">Chino a Ingles</option>
       
         </select>
       </div>
@@ -66,9 +59,10 @@ export default {
       titulo: "Traductor",
       uploadURL: url + "subDirectory=file",
       urlAzerbaiyan: urlTr + "?source=ar&target=en",
-      urlChino: urlTr + "source=ch" + "target=en",
+      urlArabe: urlTr + "source=ar" + "target=en",
       file: "",
       isCreate: false,
+      PropertyName: "PropertyName"
     };
   },
   methods: {
@@ -107,18 +101,44 @@ export default {
           
          },
        };
-       this.$http
+
+        this.$http
          .post(this.uploadURL,formData,config)
-         .then(function (response) {
-           if (response.status === 200) {
-           console.log(response.data);
-           }
-         });
+          .then(function (response) {
+            if (response.status === 200) {
+            console.log(response.data);
+            }
+          });
+         
 
          
      
      },
-       getAzerbaiyan(event) {
+//         getArabe(event) {
+//          var barra = document.getElementById('progress')
+//        barra.value +=100
+    
+//        event.preventDefault();
+//        let formData = new FormData();
+//        formData.append("file", this.file);
+//        let config = {
+//          headers: {
+//            "Content-Type": "multipart/form-data",
+          
+//          },
+//        };
+//         this.$http
+//          .post(this.urlArabe,formData,config)
+//          .then(function (response) {
+//            if (response.status === 200) {
+//         console.log(response.data);
+  
+            
+//            }
+//          });
+
+//  },
+         getAzerbaiyan(event) {
         var barra = document.getElementById('progress')
       barra.value +=100
     
@@ -131,23 +151,30 @@ export default {
           
         },
       };
-      this.$http
+       this.$http
         .post(this.urlAzerbaiyan,formData,config)
         .then(function (response) {
           if (response.status === 200) {
-            console.log(response.data);
+      console.log(response.data);
+  
+             //window.location="http://localhost:5000/download_file/0c98b71f-7788-4af7-a0a6-12c81ef8a07b.holaa_en.txt";
           }
+            
         });
-        
+         },
+    
 
-    }, 
+
        saveTranslate(event) {
     
         this.submitForm(event),
         this.getAzerbaiyan(event)
+     
 
-      } 
- 
+      } ,
+
+     
+  
      
 
    
@@ -212,13 +239,13 @@ h1 {
    width:150px;
     color:rgb(202, 55, 10);
     height: 40px;
-    top:470px;
-    left:1310px
+    top:456px;
+    left:950px
 }
 #charge{
   position:absolute;
- top:475px;
- left:1200px;
+ top:465px;
+ left:850px;
  color:rgb(5, 83, 5);
 }
 

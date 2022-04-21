@@ -16,12 +16,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
-<<<<<<< HEAD
-=======
-using System;
-using System.Threading.Tasks;
-using RestSharp;
->>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
 
 namespace TranslateApi.Controllers
 {
@@ -44,11 +38,8 @@ namespace TranslateApi.Controllers
         [HttpPost("Upload")]
         public IActionResult Upload([Required] IFormFile file, [Required] string subDirectory)
         {
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
             if (file != null)
             {
                 if (!Directory.Exists(subDirectory))
@@ -65,19 +56,12 @@ namespace TranslateApi.Controllers
                     file.CopyTo(fs);
                     fs.Flush();
                 }
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
                 return BadRequest("Archivo enviado");
             }
             else
             {
                 return BadRequest("Archivo no enviado");
             }
-<<<<<<< HEAD
         }
         #endregion
 
@@ -86,54 +70,13 @@ namespace TranslateApi.Controllers
 
 
       
-=======
-
-
-        }
-
-
-        #endregion
-
-
-        #region Translate
-        [HttpPost("Translate")]
-
-        public async Task<IActionResult> Translate(string source, string target)
-        {
-
-
-            var client = new RestClient("http://localhost:5000/translate_file");
-
-            var request = new RestRequest();
-            request.AddFile("file", @"C:/Users/SANTI/OneDrive/Documentos/holaa.txt");
-            request.AddParameter("source", source);
-            request.AddParameter("target", target);
-            RestResponse response = await client.ExecuteAsync(request);
-            Console.WriteLine(response.Content);
-            return BadRequest();
-        }
-        #endregion
-
-
-
->>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
 
 
 
 
 
-<<<<<<< HEAD
         
 
 
     }
 }
-=======
-
-
-    }
-
-}
-
-  
->>>>>>> 91fd57fb9c458de7430dbfee62a124d9714181c0
