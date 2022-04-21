@@ -157,7 +157,7 @@ export default {
           if (response.status === 200) {
       console.log(response.data);
   
-             //window.location="http://localhost:5000/download_file/0c98b71f-7788-4af7-a0a6-12c81ef8a07b.holaa_en.txt";
+            //window.location="http://localhost:5000/download_file/0c98b71f-7788-4af7-a0a6-12c81ef8a07b.holaa_en.txt";
           }
             
         });
