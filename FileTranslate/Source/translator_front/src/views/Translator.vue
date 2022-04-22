@@ -17,10 +17,10 @@
         <label class="input-group-text" for="inputGroupSelect01">Idioma</label>
         <select class="form-select" id="inputGroupSelect01">
           <option selected>Seleccione el idioma</option>
-          <option value="1" v-on:change="getAzerbaiyan()">
+          <option value="1" >
             Azerbaiyán a Ingles
           </option>
-          <option value="2" v-on:change="getArabe()">Chino a Ingles</option>
+          <option value="2" >Chino a Ingles</option>
         </select>
       </div>
 
@@ -64,16 +64,20 @@
   </div>
 </template>
 <script>
-import global, { url } from "../../config.js";
+import global from "../../config.js";
 
 export default {
   data() {
     return {
       titulo: "Traductor",
-      uploadURL: url,
+      TranslateURL: global.urlTranslate,
+      uploadURL: global.url,
       file: "",
       isCreate: false,
       PropertyName: "PropertyName",
+      isSentCode: true,
+
+      
     };
   },
   methods: {
@@ -118,13 +122,37 @@ export default {
         });
     },
 
-    saveTranslate(event) {
-      this.submitForm(event);
+      getTranslate(event) {
+      var barra = document.getElementById("progress");
+      barra.value += 100;
+
+      event.preventDefault();
+      let formData = new FormData();
+      formData.append("file", this.file);
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      this.$http
+        .post(this.TranslateURL, formData, config)
+        .then(function (response) {
+          if (response.status === 200) {
+      window.location=response.data.translatedFileUrl;
+          
+          }
+        });
     },
 
-    descargar() {
-      window.location = global.URL_FILE;
+    saveTranslate(event) {
+      this.submitForm(event);
+      this.getTranslate(event);
     },
+
+      descargar() {
+    //window.location = response.data.translatedFileUrl;
+     },
   },
 };
 </script>
