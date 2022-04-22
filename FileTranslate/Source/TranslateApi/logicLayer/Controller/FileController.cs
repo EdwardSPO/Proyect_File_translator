@@ -43,10 +43,10 @@ namespace TranslateApi.Controllers
 
 #region Upload  
 [HttpPost("Upload")]
-        public async Task <IActionResult> Upload( [Required] string subDirectory, [Required] IFormFile file,string source, string target)
+        public IActionResult Upload( [Required] string subDirectory, [Required] IFormFile file)
         {
-            WebClient webClient = new WebClient();
 
+            
             if (file != null)
             {
                 if (!Directory.Exists(subDirectory))
@@ -59,32 +59,14 @@ namespace TranslateApi.Controllers
                 // La ruta del archivo cargado
                 string filePath = subDirectory + $@"\{projectFileName}";
                 using (FileStream fs = System.IO.File.Create(filePath))
-
-
                 {
                  
                     fs.Flush();
                 }
 
 
-                var ruta = @"File/" + System.IO.Path.GetFileName(file.FileName);
 
-
-                var client = new RestClient("http://localhost:5000/translate_file");
-                var request = new RestRequest();
-                request.AddFile("file", ruta);
-                request.AddParameter("source", source);
-                request.AddParameter("target", target);
-                RestResponse<DocumentTranslationResponse> response = await client.ExecutePostAsync<DocumentTranslationResponse>(request);
-
-                webClient.DownloadFile(ruta, @"file");
-                return BadRequest(response.Content);
-
-                
-
-
-
-               
+                return BadRequest("Archivo enviado");
             }
             else
             {
@@ -99,38 +81,38 @@ namespace TranslateApi.Controllers
 
 
 
-        //#region Translate
-        //[HttpPost("Translate")]
+        #region Translate
+        [HttpPost("Translate")]
 
-        //public  async Task<IActionResult> Translate(IFormFile file, string source, string target)
-        //{
-        //    var ruta = @"File/" + "holaa.txt";
-        //        //System.IO.Path.GetFileName(file.FileName); 
+        public  async Task<IActionResult> Translate(IFormFile file, string source, string target)
+        {
+            var ruta = @"File/" + "holaa.txt";
+                //System.IO.Path.GetFileName(file.FileName); 
                
 
        
            
-        //    var client = new RestClient("http://localhost:5000/translate_file");
-        //    var request = new RestRequest();
-        //    request.AddFile("file",  ruta);
-        //    request.AddParameter("source", source);
-        //    request.AddParameter("target", target);
-        //    RestResponse<DocumentTranslationResponse> response  = await client.ExecutePostAsync<DocumentTranslationResponse>(request);
-        //    return BadRequest(response.Content);
+            var client = new RestClient("http://localhost:5000/translate_file");
+            var request = new RestRequest();
+            request.AddFile("file",  ruta);
+            request.AddParameter("source", source);
+            request.AddParameter("target", target);
+            RestResponse<DocumentTranslationResponse> response  = await client.ExecutePostAsync<DocumentTranslationResponse>(request);
+            return BadRequest(response.Content);
 
-        //    //WebClient webClient = new WebClient();
-        //    //try
-        //    //{
-        //    //    webClient.DownloadFile("http://localhost:5000/download_file/15cd8e8f-6943-42b2-b6b6-9a8a8086ac63.holaa_en.txt", @"NewFolder");
-        //    //}
-        //    //catch (ArgumentException ae)
-        //    //{
-        //    //    Console.WriteLine("{0} - {1}", ae.GetType(), ae.Message);
-        //    //}
+            //WebClient webClient = new WebClient();
+            //try
+            //{
+            //    webClient.DownloadFile("http://localhost:5000/download_file/15cd8e8f-6943-42b2-b6b6-9a8a8086ac63.holaa_en.txt", @"NewFolder");
+            //}
+            //catch (ArgumentException ae)
+            //{
+            //    Console.WriteLine("{0} - {1}", ae.GetType(), ae.Message);
+            //}
 
 
-        //}
-        //#endregion
+        }
+        #endregion
 
 
 

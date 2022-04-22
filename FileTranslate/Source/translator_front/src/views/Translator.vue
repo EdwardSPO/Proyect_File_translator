@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{titulo}}</h1>
+    <h1>{{ titulo }}</h1>
     <div class="header"></div>
 
     <div class="container">
@@ -15,19 +15,25 @@
 
       <div class="flex-wrap input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">Idioma</label>
-        <select class="form-select" id="inputGroupSelect01" >
+        <select class="form-select" id="inputGroupSelect01">
           <option selected>Seleccione el idioma</option>
-          <option value="1" v-on:change="getAzerbaiyan()">Azerbaiyán a Ingles</option>
+          <option value="1" v-on:change="getAzerbaiyan()">
+            Azerbaiyán a Ingles
+          </option>
           <option value="2" v-on:change="getArabe()">Chino a Ingles</option>
-      
         </select>
       </div>
-      
-      <br />
-    <div class=" flex-wrap progress"></div>
- <h5 id="charge">Progress:</h5> 
-  <progress id="progress" value="0" max="100" class="barraStyle" style="background-color=red" ></progress> 
 
+      <br />
+      <div class="flex-wrap progress"></div>
+      <h5 id="charge">Progress:</h5>
+      <progress
+        id="progress"
+        value="0"
+        max="100"
+        class="barraStyle"
+        style="background-color=red"
+      ></progress>
 
       <div
         class="flex-wrap btn-group"
@@ -43,144 +49,82 @@
         >
           Traducir
         </button>
+
+        <button
+          id="traduccion2"
+          type="button"
+          value="cargar"
+          class="flex-wrap btn btn-success"
+          @click="descargar()"
+        >
+          Descargar
+        </button>
       </div>
     </div>
   </div>
 </template>
 <script>
-const url = "https://localhost:5024/api/File/Upload?";
-const urlTr = "https://localhost:5024/api/File/Translate";
-
-
+import global, { url } from "../../config.js";
 
 export default {
   data() {
     return {
       titulo: "Traductor",
-      uploadURL: url + "subDirectory=file",
-      urlAzerbaiyan: urlTr + "?source=ar&target=en",
-      urlArabe: urlTr + "source=ar" + "target=en",
+      uploadURL: url,
       file: "",
       isCreate: false,
-      PropertyName: "PropertyName"
+      PropertyName: "PropertyName",
     };
   },
   methods: {
-    
     getFile(event) {
-    var formFile = document.getElementById("formFile");
-    var archivoRuta = formFile.value;
-    var extPermitidas = /(.docx|.txt)$/i;
-    if(!extPermitidas.exec(archivoRuta)){
-    alert('Asegurese de haber seleccionado un archivo tipo docx o txt')
-    formFile.value=''
-    return false; 
-    }
-   
-    
-      var ValidationFile= document.getElementById("formFile").files[0].size;
-       if(ValidationFile > 500000000){
-      alert("El archivo no debe pesar mas de 500MB")
-    } else{
-      this.file = event.target.files[0];
-      console.log(this.file);
-    }
+      var formFile = document.getElementById("formFile");
+      var archivoRuta = formFile.value;
+      var extPermitidas = /(.docx|.txt)$/i;
+      if (!extPermitidas.exec(archivoRuta)) {
+        alert("Asegurese de haber seleccionado un archivo tipo docx o txt");
+        formFile.value = "";
+        return false;
+      }
+
+      var ValidationFile = document.getElementById("formFile").files[0].size;
+      if (ValidationFile > 500000000) {
+        alert("El archivo no debe pesar mas de 500MB");
+      } else {
+        this.file = event.target.files[0];
+        console.log(this.file);
+      }
     },
-   
-   
-     submitForm(event) {
-         var barra = document.getElementById('progress')
-       barra.value +=100
-    
-       event.preventDefault();
-       let formData = new FormData();
-      formData.append("file", this.file);
-       let config = {
-         headers: {
-         "Content-Type": "multipart/form-data",
-          
-         },
-       };
 
-        this.$http
-         .post(this.uploadURL,formData,config)
-          .then(function (response) {
-            if (response.status === 200) {
-            console.log(response.data);
-            }
-          });
-         
+    submitForm(event) {
+      var barra = document.getElementById("progress");
+      barra.value += 100;
 
-         
-     
-     },
-//         getArabe(event) {
-//          var barra = document.getElementById('progress')
-//        barra.value +=100
-    
-//        event.preventDefault();
-//        let formData = new FormData();
-//        formData.append("file", this.file);
-//        let config = {
-//          headers: {
-//            "Content-Type": "multipart/form-data",
-          
-//          },
-//        };
-//         this.$http
-//          .post(this.urlArabe,formData,config)
-//          .then(function (response) {
-//            if (response.status === 200) {
-//         console.log(response.data);
-  
-            
-//            }
-//          });
-
-//  },
-         getAzerbaiyan(event) {
-        var barra = document.getElementById('progress')
-      barra.value +=100
-    
       event.preventDefault();
       let formData = new FormData();
       formData.append("file", this.file);
       let config = {
         headers: {
           "Content-Type": "multipart/form-data",
-          
         },
       };
-       this.$http
-        .post(this.urlAzerbaiyan,formData,config)
+
+      this.$http
+        .post(this.uploadURL, formData, config)
         .then(function (response) {
           if (response.status === 200) {
-      console.log(response.data);
-  
-            //window.location="http://localhost:5000/download_file/0c98b71f-7788-4af7-a0a6-12c81ef8a07b.holaa_en.txt";
+            console.log(response.data);
           }
-            
         });
-         },
-    
+    },
 
+    saveTranslate(event) {
+      this.submitForm(event);
+    },
 
-       saveTranslate(event) {
-    
-        this.submitForm(event),
-        this.getAzerbaiyan(event)
-     
-
-      } ,
-
-     
-  
-     
-
-   
-
-    
-  
+    descargar() {
+      window.location = global.URL_FILE;
+    },
   },
 };
 </script>
@@ -234,25 +178,31 @@ h1 {
   left: 1300px;
 }
 
-.barraStyle{
+.barraStyle {
   position: absolute;
-   width:150px;
-    color:rgb(202, 55, 10);
-    height: 40px;
-    top:456px;
-    left:950px
+  width: 150px;
+  color: rgb(202, 55, 10);
+  height: 40px;
+  top: 450px;
+  left: 1150px;
 }
-#charge{
-  position:absolute;
- top:465px;
- left:850px;
- color:rgb(5, 83, 5);
+#charge {
+  position: absolute;
+  top: 456px;
+  left: 1050px;
+  color: rgb(5, 83, 5);
 }
 
-#container{
-    position:absolute;
- top:435px;
- left:1310px;
- background-color:rgb(5, 83, 5);
+#container {
+  position: absolute;
+  top: 435px;
+  left: 1310px;
+  background-color: rgb(5, 83, 5);
+}
+
+#traduccion2 {
+  position: absolute;
+  top: 350px;
+  left: 520px;
 }
 </style>

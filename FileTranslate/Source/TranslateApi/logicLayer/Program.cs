@@ -10,19 +10,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using TranslateApi;
 
-namespace TranslateApi
+namespace logicLayer
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             string pathPy = "print.py";
-           ScriptRuntime py = Python.CreateRuntime();
+            ScriptRuntime py = Python.CreateRuntime();
             dynamic pyProgram = py.UseFile(pathPy);
             pyProgram.holaConNombre("Translate");
-            
+
             CreateHostBuilder(args).Build().Run();
-       
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
