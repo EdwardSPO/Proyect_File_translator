@@ -59,13 +59,9 @@ namespace TranslateApi.Controllers
                 // La ruta del archivo cargado
                 string filePath = subDirectory + $@"\{projectFileName}";
                 using (FileStream fs = System.IO.File.Create(filePath))
-
-
                 {
-                 
                     fs.Flush();
                 }
-
 
                 var ruta = @"File/" + System.IO.Path.GetFileName(file.FileName);
 
@@ -77,13 +73,8 @@ namespace TranslateApi.Controllers
                 request.AddParameter("target", target);
                 RestResponse<DocumentTranslationResponse> response = await client.ExecutePostAsync<DocumentTranslationResponse>(request);
 
-                webClient.DownloadFile(ruta, @"file");
-                return BadRequest(response.Content);
-
-                
-
-
-
+                webClient.DownloadFile(response.Data.TranslatedFileUrl, $"{projectFileName}_translate");
+                return Ok(response.Content);
                
             }
             else
