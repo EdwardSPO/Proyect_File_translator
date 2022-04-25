@@ -151,7 +151,7 @@ export default {
         .post(this.TranslateURL, formData, config)
         .then(function (response) {
           if (response.status === 200) {
-      window.location=response.data.translatedFileUrl;
+      console.log(response.data.translatedFileUrl);
           
           }
         });
