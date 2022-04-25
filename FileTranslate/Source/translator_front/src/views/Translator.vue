@@ -16,17 +16,15 @@
       </div>
 
       <div class="flex-wrap input-group mb-3">
-        <label class="input-group-text " for="inputGroupSelect01">Translate from</label>
-        <select v-model="Seleccionado" class="form-select" id="data">
-           
+        <select v-model="Seleccionado" class="form-select form-select-lg mb-3" id="data">
+           <option selected>Translate from</option>
             <option v-for="data in datos" :value="data" :key="data">{{data.name}}</option>
         </select>
       </div>
       
        <div class="flex-wrap input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">Translate into</label>
-        <select class="form-select" id="data">
-           <option selected></option>
+        <select class="form-select form-select-lg mb-3" id="data">
+           <option selected>Translate into</option>
             <option v-for="data in datos" :value="data" :key="data">{{data.name}}</option>
         </select>
       </div>
@@ -40,8 +38,7 @@
       <div
         class="flex-wrap btn-group"
         role="group"
-        aria-label="Basic mixed styles example"
-      >
+        aria-label="Basic mixed styles example">
         <button
           id="traduccion"
           type="button"
@@ -195,9 +192,10 @@ h1 {
 .form-select {
   position: absolute;
   top: 300px;
-  left: 130px;
-  width: 100px;
+  left: 75px;
+  width: -65px;
   height: 40px;
+
 }
 
 .input-group-text {

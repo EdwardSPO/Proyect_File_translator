@@ -30,7 +30,7 @@ namespace TranslateApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("https://*:5024");
+                    webBuilder.UseUrls("https://*:5000");
                 });
     }
 }
