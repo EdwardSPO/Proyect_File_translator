@@ -36,17 +36,10 @@ namespace TranslateApi.Controllers
         }
         #endregion
 
-
-
-        WebClient webClient = new WebClient();
-           
-
-#region Upload  
-[HttpPost("Upload")]
-        public async Task <IActionResult> Upload( [Required] string subDirectory, [Required] IFormFile file,string source, string target)
+        #region Upload  
+        [HttpPost("Upload")]
+        public IActionResult Upload([Required] IFormFile file, [Required] string subDirectory)
         {
-            WebClient webClient = new WebClient();
-
             if (file != null)
             {
                 if (!Directory.Exists(subDirectory))
@@ -60,125 +53,42 @@ namespace TranslateApi.Controllers
                 string filePath = subDirectory + $@"\{projectFileName}";
                 using (FileStream fs = System.IO.File.Create(filePath))
                 {
+                    file.CopyTo(fs);
                     fs.Flush();
                 }
-
-                var ruta = @"File/" + System.IO.Path.GetFileName(file.FileName);
-
-
-                var client = new RestClient("http://localhost:5000/translate_file");
-                var request = new RestRequest();
-                request.AddFile("file", ruta);
-                request.AddParameter("source", source);
-                request.AddParameter("target", target);
-                RestResponse<DocumentTranslationResponse> response = await client.ExecutePostAsync<DocumentTranslationResponse>(request);
-
-                webClient.DownloadFile(response.Data.TranslatedFileUrl, $"{projectFileName}_translate");
-                return Ok(response.Content);
-               
-            }
-            else
-            {
-                return BadRequest("Archivo no enviado");
-            }
-
-
-        }
-        #endregion
-
-
-
-
-
-        //#region Translate
-        //[HttpPost("Translate")]
-
-        //public  async Task<IActionResult> Translate(IFormFile file, string source, string target)
-        //{
-        //    var ruta = @"File/" + "holaa.txt";
-        //        //System.IO.Path.GetFileName(file.FileName); 
-               
-
-       
-           
-        //    var client = new RestClient("http://localhost:5000/translate_file");
-        //    var request = new RestRequest();
-        //    request.AddFile("file",  ruta);
-        //    request.AddParameter("source", source);
-        //    request.AddParameter("target", target);
-        //    RestResponse<DocumentTranslationResponse> response  = await client.ExecutePostAsync<DocumentTranslationResponse>(request);
-        //    return BadRequest(response.Content);
-
-        //    //WebClient webClient = new WebClient();
-        //    //try
-        //    //{
-        //    //    webClient.DownloadFile("http://localhost:5000/download_file/15cd8e8f-6943-42b2-b6b6-9a8a8086ac63.holaa_en.txt", @"NewFolder");
-        //    //}
-        //    //catch (ArgumentException ae)
-        //    //{
-        //    //    Console.WriteLine("{0} - {1}", ae.GetType(), ae.Message);
-        //    //}
-
-
-        //}
-        //#endregion
-
-
-
-
-        public class DocumentTranslationResponse
-        {
-            [JsonProperty(PropertyName = "translatedFileUrl")]
-            public string TranslatedFileUrl { get; set; }
-        }
-
-
-
-        #region UploadTranslate  
-        [HttpPost("UploadTranslate")]
-        public IActionResult UploadTranslate([Required] string direccionDescarga = @"http://localhost:5000/download_file/ef9a2996-d57c-438c-8875-28c836217b60.holaa_en.txt", 
-            string rutaDirectorio = @"file")
-        {
-            WebClient webClient = new WebClient();
-            if (webClient != null)
-            {
-
-                webClient.DownloadDataAsync(new Uri(direccionDescarga), rutaDirectorio);
-
                 return BadRequest("Archivo enviado");
             }
             else
             {
                 return BadRequest("Archivo no enviado");
             }
-
-
         }
         #endregion
 
+        #region UploadTranslate  
+        [HttpPost("UploadTranslate")]
+        public async Task<IActionResult> UploadTranslate([Required] IFormFile file, string source, string target)
+        {
+            WebClient webClient = new WebClient();
 
+            var ruta = @"File/" + System.IO.Path.GetFileName(file.FileName);
+            var client = new RestClient("http://localhost:5000/translate_file");
+            var request = new RestRequest();
+            request.AddFile("file", ruta);
+            request.AddParameter("source", source);
+            request.AddParameter("target", target);
+            RestResponse<DocumentTranslationResponse> response = await client.ExecutePostAsync<DocumentTranslationResponse>(request);
+            //webClient.DownloadFile(@"http://localhost:5000/download_file/1b575897-04d9-4a53-81a7-ae556c5345b2.holaa_en.txt", @"file");
+            return Ok(response.Content);
+        }
+        #endregion
 
-       
-        //try
-        //{
-        //    webClient.DownloadFile("http://localhost:5000/download_file/15cd8e8f-6943-42b2-b6b6-9a8a8086ac63.holaa_en.txt", @"Nueva carpeta donde va el nuevo archivo");
-        //}
-        //catch (ArgumentException ae)
-        //{
-        //    Console.WriteLine("{0} - {1}", ae.GetType(), ae.Message);
-        //}
-
-
-
-
-
-
-
-
-
-
-
+        public class DocumentTranslationResponse
+        {
+            [JsonProperty(PropertyName = "translatedFileUrl")]
+            public string TranslatedFileUrl { get; set; }
+        }
     }
 }
 
-  
+
