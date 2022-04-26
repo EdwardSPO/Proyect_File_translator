@@ -1,6 +1,5 @@
 <template>
   <div>
-
             <Header />
     <h1>{{titulo}}</h1>
    
