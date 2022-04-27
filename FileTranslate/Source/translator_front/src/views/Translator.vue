@@ -41,6 +41,9 @@
           role="group"
           aria-label="Basic mixed styles example"
         >
+        <div v-if="loading">
+          <p id="cargado">Cargando...</p>
+        </div>
           <button
             id="traduccion"
             type="button"
@@ -56,7 +59,6 @@
   </div>
 </template>
 <script>
-import "vue-loading-overlay/dist/vue-loading.css";
 import Header from "@/components/Header.vue";
 import global from "../../config.js";
 import axios from "axios";
@@ -65,15 +67,15 @@ export default {
   data() {
     return {
       titulo: "Traductor",
-      uploadURL: global.url,
-      urlTranslate: global.urlTr,
+      uploadURL: global.URL_FILE,
+      urlTranslate: global.URL_TRANSLATE,
       file: "",
       isCreate: false,
       PropertyName: "PropertyName",
       Seleccionado: {},
       datos: [],
       groups: [],
-      isLoading: true,
+      loading: false,
     };
   },
   components: {
@@ -83,9 +85,7 @@ export default {
     let direccion = global.API_LANGUAGES;
     axios.get(direccion).then((data) => {
       this.datos = data.data;
-
       this.groups = this.getTranslate();
-      this.isLoading = false;
     });
   },
   methods: {
@@ -136,15 +136,19 @@ export default {
         .post(this.urlTranslate, formData, config)
         .then(function (response) {
           if (response.status === 200) {
-            console.log(response.datal);
-            window.location = response.data.translatedFileUrl;
+            console.log(response.data);
+            window.location=response.data.translatedFileUrl; 
           }
-        });
+        })
     },
-
     saveTranslate(event) {
-      this.submitForm(event), this.getTranslate(event);
-    },
+         this.submitForm(event), this.getTranslate(event)
+          if(this.getTranslate!= null){
+           this.loading=true;
+         }else{
+           this.loading=false;
+         }
+       },
   },
 };
 </script>
@@ -232,5 +236,10 @@ h1 {
   top: 320px;
   left: 150px;
   width: 170px;
+}
+#cargado{
+  position: absolute;
+  top: 395px;
+  left: 200px;
 }
 </style>
