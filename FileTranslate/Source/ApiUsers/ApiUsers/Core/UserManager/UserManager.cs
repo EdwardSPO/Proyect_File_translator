@@ -20,10 +20,6 @@ namespace ApiUsers.Core.UserManager
         private const string _ERROR_USER = "this data does not exist";
         private const string _ERROR_EMAIL = "Email already exists";
         private const string _ERROR_LIST = "There is no user at this time"; 
-        
-
-
-
         public async Task<ResultHelper<IEnumerable<User>>> GetUsersAsync()
         {
             var resultado = new ResultHelper<IEnumerable<User>>();
@@ -58,9 +54,7 @@ namespace ApiUsers.Core.UserManager
             {
                 string error = _ERROR_USER;
                 resultado.AddError(error);
-
             }
-
             return resultado;
         }
         public async Task<ResultHelper<User>> CreateAsync(User user)
@@ -108,21 +102,16 @@ namespace ApiUsers.Core.UserManager
                     Password = user.Password = Encrypt.GetSHA256(user.Password)
 
                 };
-              
                 var vali = (from d in _context.Users
                             where d.Email == user.Email && d.Password == user.Password
                             select d).FirstOrDefault();
-
                 if (vali != null)
                 {
-
                     _context.Users.Add(nuevaUser);
-
                     resultado.Value = nuevaUser;
                 }
                 else
-                {
-             
+                {            
                     string error = _ERROR_EMAIL;
                     resultado.AddError(error);
                 }
@@ -133,7 +122,5 @@ namespace ApiUsers.Core.UserManager
             }
             return resultado;
         }
-
-
     }
 }

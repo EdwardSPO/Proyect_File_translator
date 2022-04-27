@@ -12,7 +12,6 @@ namespace ApiUsers.Data
     {
         public UsersContext(DbContextOptions<UsersContext> options)
             : base(options) { }
-
         public DbSet<User> Users { get; set; }
     }
 }
