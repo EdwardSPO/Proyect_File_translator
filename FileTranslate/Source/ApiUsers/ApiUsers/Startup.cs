@@ -44,13 +44,9 @@ namespace ApiUsers
                 app.UseDeveloperExceptionPage();
             }
             app.UseCors(options => options.WithOrigins("*").AllowAnyHeader().AllowAnyMethod());
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

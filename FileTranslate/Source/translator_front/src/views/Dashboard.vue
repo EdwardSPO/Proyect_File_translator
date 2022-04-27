@@ -33,7 +33,6 @@ import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import axios from 'axios';
 import global from '../../config.js'
-
 export default {
   name: "Dashboard",
      components:{

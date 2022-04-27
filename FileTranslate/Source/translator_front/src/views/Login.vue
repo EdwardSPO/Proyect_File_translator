@@ -2,28 +2,17 @@
      <div class="home">
       <div class="wrapper fadeInDown">
               <div id="formContent">
-                <!-- Tabs Titles -->
-
-                <!-- Icon -->
                 <div class="fadeIn first">
                   <img src="../../public/assets/img/images.png" id="icon" alt="User Icon" />
                 </div>
-
-                <!-- Login Form -->
                 <form v-on:submit.prevent="login">
                   <input type="text" id="login" class="fadeIn second" name="login" placeholder="email" v-model="email" required>
                   <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password" v-model="password" required>
                   <input type="submit" class="fadeIn fourth" value="Log In">
                 </form>
-
-                <!-- Remind Passowrd -->
-            
-
               </div>
             </div>
-
-  </div>      
-    
+  </div>         
 </template>
 <script>
 import axios from 'axios';

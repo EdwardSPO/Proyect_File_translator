@@ -10,7 +10,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/translator',
     name: 'Translator',
     component: Translator
 },

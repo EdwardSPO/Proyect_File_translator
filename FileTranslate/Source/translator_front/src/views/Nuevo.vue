@@ -32,23 +32,18 @@
                                   <input type="password" class="form-control" name="password" id="password" v-model="form.password" required >
 
                                   <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.password.required" >The field is required </div>
-                            <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.password.minLength" >The lastName must have at least 8 characters  </div>     
-                                                        
+                            <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.password.minLength" >The lastName must have at least 8 characters  </div>                                                             
                         </div>                   
                         <div class="col-12">
                      
-                          <button type="submit" class="btn btn-primary fw-bold float-end" v-on:click="guardar()" >Save</button>
-               
-                      <button type="button" class="btn btn-dark margen fw-bold float-end" v-on:click="salir()"  >leave</button>
-                      
-                      
-                        </div>
+                          <button type="submit" class="btn btn-primary fw-bold float-end" v-on:click="guardar()" >Save</button>              
+                         <button type="button" class="btn btn-dark margen fw-bold float-end" v-on:click="salir()"  >leave</button>
+                      </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-        
+    </div>        
         <Footer/>       
     </div>
 </template>
@@ -80,20 +75,25 @@ export default {
         Header,
         Footer
     },
-    
-    methods:{
-       
-        guardar(){
-          
+    methods:{     
+        guardar(){         
             axios.post(global.API_USERS,this.form)
             .then(data =>{
                 this.makeToast("Hecho","Usuario creado","success"+data);
                 this.$router.push("/dashboard");
+        
             }).catch( e =>{
-                console.log(e);                      
-               swal({title: "Warning",  text: "Email already exists",
+                console.log(e); 
+                if(this.form.email == ""){                     
+               swal({title: "Error",  text: "There are empty fields",
+                   icon: "error",
+                   })
+                }
+                else{
+                    swal({title: "Warning",  text: "Email already exists",
                    icon: "warning",
                    })
+                }
                    checkForm();
             });
         },
@@ -104,10 +104,8 @@ export default {
                 return false;
             }
     
-        },
-           
-       
-        salir(){
+        },       
+       salir(){
             this.$router.push("/dashboard");
         },
         makeToast(titulo,texto,tipo) {
@@ -118,10 +116,7 @@ export default {
             autoHideDelay: 5000,
             appendToast: true
             })
-        },
-
-       
-        
+        },        
     },
      validations:{
             form:{
@@ -140,9 +135,7 @@ export default {
                 },
                  password:{
                     required,
-                    minLength: minLength(8)
-                 
-                    
+                    minLength: minLength(8)                   
                 }
             }
         }
