@@ -12,11 +12,14 @@ namespace ApiUsers.Controller
     public class UserController : ControllerBase
     {
         private readonly IUserManager _userManager;
+
+        public UserController()
+        {
+        }
         public UserController( IUserManager userManager)
         {
             _userManager = userManager;
         }
-
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
