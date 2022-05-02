@@ -52,7 +52,20 @@ namespace TestProject1
             //assert
             Assert.IsFalse(result.IsCompletedSuccessfully);
         }
+        [TestMethod]
+        public void UsersListForId()
+        {
+            //arrange
+            UserController context = new UserController();
 
+            User user = new User();
+            var id = 1;
+            //act
+            var result = context.GetAll();
+            //assert
+            Assert.IsFalse(result.IsCompletedSuccessfully);
+
+        }
     }
 
 }
