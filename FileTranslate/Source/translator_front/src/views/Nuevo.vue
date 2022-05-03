@@ -36,8 +36,8 @@
                         </div>                   
                         <div class="col-12">
                      
-                          <button type="submit" class="btn btn-primary fw-bold float-end" v-on:click="guardar()" >Save</button>              
-                         <button type="button" class="btn btn-dark margen fw-bold float-end" v-on:click="salir()"  >leave</button>
+                          <button type="submit" id="btnsave" class="btn btn-primary fw-bold float-end" v-on:click="guardar()" >Save</button>              
+                         <button type="button" class="btn btn-dark margen fw-bold float-end" id="btnButton" v-on:click="salir()"  >leave</button>
                       </div>
                     </form>
                 </div>

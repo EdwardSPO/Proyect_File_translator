@@ -8,7 +8,7 @@
                 <form v-on:submit.prevent="login">
                   <input type="text" id="login" class="fadeIn second" name="login" placeholder="email" v-model="email" required>
                   <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password" v-model="password" required>
-                  <input type="submit" class="fadeIn fourth" value="Log In">
+                  <input type="submit" class="fadeIn fourth"  id="btnLogin" value="Log In">
                 </form>
               </div>
             </div>

@@ -18,7 +18,7 @@
           <label class="input-group-text" for="inputGroupSelect01" id="from">
             Translate from</label
           >
-          <select v-model="Seleccionado" class="form-select" id="data">
+          <select v-model="Seleccionado" class="form-select" id="Translatefrom">
             <option v-for="data in datos" :value="data" :key="data">
               {{ data.name }}
             </option>
@@ -28,7 +28,7 @@
           <label class="input-group-text" for="inputGroupSelect01" id="into"
             >Translate into</label
           >
-          <select class="form-select" id="data1">
+          <select class="form-select" id="TranslateInto">
             <option selected></option>
             <option v-for="data in datos" :value="data" :key="data">
               {{ data.name }}
@@ -213,13 +213,13 @@ h1 {
   border-radius: 15px;
   background-color: rgb(244, 241, 241);
 }
-#data {
+#Translatefrom {
   position: absolute;
   top: 260px;
   width: 523px;
   left: 320px;
 }
-#data1 {
+#TranslateInto {
   position: absolute;
   top: 320px;
   width: 523px;
