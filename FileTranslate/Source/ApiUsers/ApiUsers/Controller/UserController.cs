@@ -13,9 +13,7 @@ namespace ApiUsers.Controller
     {
         private readonly IUserManager _userManager;
 
-        public UserController()
-        {
-        }
+ 
         public UserController( IUserManager userManager)
         {
             _userManager = userManager;
@@ -57,7 +55,7 @@ namespace ApiUsers.Controller
             var result = await _userManager.LoginAsync(user);
             if (result.Success)
             {
-                return Ok("Ok");
+                return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
             }
             return Ok(result.Errors);
         }

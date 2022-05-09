@@ -8,9 +8,10 @@
                 <form v-on:submit.prevent="login">
                   <input type="text" id="login" class="fadeIn second" name="login" placeholder="email" v-model="email" required>
                   <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password" v-model="password" required>
-                  <input type="submit" class="fadeIn fourth" value="Log In">
+                  <input type="submit" class="fadeIn fourth" value="Log In" @click="login()">
                 </form>
               </div>
+             
             </div>
   </div>         
 </template>
@@ -20,6 +21,7 @@ import swal from 'sweetalert';
 export default {
   name: 'Login',
   components: {
+    
   },
   data: function(){
     return {
@@ -36,11 +38,14 @@ export default {
         };
         axios.post('https://localhost:44394/api/user/login', json)
         .then( data =>{
-           if(data.data == "Ok"){
-
-             this.$router.push('translator');
+           if(data.status == "201"){
+            // console.log(data);
+              this.NumeraAenviar = data.data.id
+              console.log(this.NumeraAenviar);
+           this.$router.push('/translator/'+data.data.id);
+        
            }else{
-             console.log(data);
+            // console.log(data);
                 swal({title: "Warning",  text: "The email or password is not correct",
                    icon: "warning",
                    })              
@@ -49,6 +54,7 @@ export default {
            }
         })
     }
+      
   }
 }
 </script>

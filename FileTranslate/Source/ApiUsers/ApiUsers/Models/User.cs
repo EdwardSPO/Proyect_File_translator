@@ -15,6 +15,11 @@ namespace ApiUsers.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        [ForeignKey("Rol")]
+        public int IdRol { get; set; }
+        public virtual Rol Rol { get; set; }
+        public virtual ICollection<UpdateFile> UpdateFile { get; set; }
+
 
     }
 }

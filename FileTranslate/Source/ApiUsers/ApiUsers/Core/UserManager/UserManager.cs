@@ -23,14 +23,8 @@ namespace ApiUsers.Core.UserManager
         public async Task<ResultHelper<IEnumerable<User>>> GetUsersAsync()
         {
             var resultado = new ResultHelper<IEnumerable<User>>();
-            var users = await _context.Users.Select(s => new User
-            {
-                Id = s.Id,
-                Name = s.Name,
-                LastName = s.LastName,
-                Email = s.Email,
-                Password = s.Password
-            }).ToListAsync();
+            var users = await _context.Users.Include(s => s.Rol).ToListAsync();
+        
             if (users.Count > 0)
             {
                 resultado.Value = users;
@@ -63,11 +57,13 @@ namespace ApiUsers.Core.UserManager
             try
             {
                 User nuevaUser = new User
+
                 {
                     Name = user.Name,
                     LastName = user.LastName,
                     Email = user.Email,
-                    Password = Encrypt.GetSHA256(user.Password)
+                    Password = Encrypt.GetSHA256(user.Password),
+                    IdRol = user.IdRol,
 
                 };
 
@@ -94,21 +90,24 @@ namespace ApiUsers.Core.UserManager
         public async Task<ResultHelper<User>> LoginAsync(User user)
         {
             var resultado = new ResultHelper<User>();
+
             try
             {
                 User nuevaUser = new User
-                {               
+                {
+                    
                     Email = user.Email,
                     Password = user.Password = Encrypt.GetSHA256(user.Password)
 
                 };
                 var vali = (from d in _context.Users
-                            where d.Email == user.Email && d.Password == user.Password
+                            where d.Email == user.Email && d.Password == user.Password 
                             select d).FirstOrDefault();
                 if (vali != null)
-                {
+                {             
                     _context.Users.Add(nuevaUser);
-                    resultado.Value = nuevaUser;
+
+                    resultado.Value = vali;
                 }
                 else
                 {            

@@ -9,18 +9,14 @@ import Translator from '../views/Translator'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/translator',
-    name: 'Translator',
-    component: Translator
-},
+
   {
     path: '/',
     name: 'Login',
     component: Login
   },
   {
-    path: '/translator',
+    path: '/translator/:id',
     name: 'Translator',
     component: Translator
 },

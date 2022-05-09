@@ -13,5 +13,7 @@ namespace ApiUsers.Data
         public UsersContext(DbContextOptions<UsersContext> options)
             : base(options) { }
         public DbSet<User> Users { get; set; }
+        public DbSet<Rol> Roles { get; set; }
+        public DbSet<UpdateFile> UpdateFiles { get; set; }
     }
 }

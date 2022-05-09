@@ -31,9 +31,15 @@
 </div>  
 </template>
 <script>
+
+
 export default {
+  
   name: 'Header',
   components: {
+  },
+  props:{
+     valorRecibido: null
   },
   methods:{
              Sign(){
@@ -43,9 +49,12 @@ export default {
              this.$router.push('/dashboard');  
             },
              Translator(){
-             this.$router.push('/translator');  
+             this.$router.push('/translator/:id');  
             }
 
-  }
+
+  },
+
+
 }
 </script>

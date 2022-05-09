@@ -11,7 +11,8 @@
                         <th scope="col" >Name</th>
                         <th scope="col">LastName</th>
                     <th scope="col">Email</th> 
-                      <th scope="col">Password</th>                                
+                      <th scope="col">Password</th>    
+                            <th scope="col">Rol</th>                                
                     </tr>
                 </thead>
                 <tbody>               
@@ -21,6 +22,7 @@
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.password }}</td>
+                           <td>{{ user.rol.nameRole }}</td>
                  </tr>  
                 </tbody>
                 </table>
@@ -52,7 +54,8 @@ export default {
     mounted:function(){
         let direccion = global.API_USERS;
         axios.get( direccion).then(data =>{
-           this.users=data.data;      
+           this.users=data.data;  
+           console.log(data.data);    
         })
     }
 }

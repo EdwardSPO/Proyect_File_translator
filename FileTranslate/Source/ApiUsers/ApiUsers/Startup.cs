@@ -33,7 +33,7 @@ namespace ApiUsers
             #region Inyeccion de dependencias
             services.AddScoped<IUserManager, UserManager>();
             #endregion
-            services.AddDbContext<UsersContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("PruebaDb")));
+            services.AddDbContext<UsersContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("PruebaDb1")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
