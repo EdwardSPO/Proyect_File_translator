@@ -1,60 +1,43 @@
-<template>
-<div>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarButtonsExample"
-      aria-controls="navbarButtonsExample"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarButtonsExample">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" v-on:click="Dashboard()">Dashboard</a>
-        </li>
-          <li class="nav-item">
-          <a class="nav-link"  v-on:click="Translator()">Translator</a>
-        </li>
-      </ul>
-      <div class="d-flex align-items-center">
-            <button type="button" class="btn btn-primary margen fw-bold float-end" v-on:click="Sign()">Sign-off</button>
-      </div>
-    </div>
+
+      <template>
+  <div>
+    <v-toolbar
+      dark
+      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
+      <v-toolbar-title>Translate</v-toolbar-title>
+     
+          <template v-slot:extension>
+        <v-tabs align-with-title>
+          <v-tab @click="ListBTN()">List Users</v-tab>
+          <v-tab @click="TransBTN()">Translator</v-tab>
+          <v-tab>Tab 3</v-tab>
+        </v-tabs>
+      </template>
+      <v-spacer></v-spacer>
+       <v-btn color="primary"  @click="Salir()">
+      Salir
+      </v-btn>
+    
+    </v-toolbar>
   </div>
-</nav>
-</div>  
 </template>
 <script>
 
-
 export default {
-  
   name: 'Header',
-  components: {
-  },
-  props:{
-     valorRecibido: null
-  },
+
   methods:{
-             Sign(){
-             this.$router.push('/');  
-            },
-             Dashboard(){
-             this.$router.push('/dashboard');  
-            },
-             Translator(){
-             this.$router.push('/translator/:id');  
-            }
-
-
-  },
-
-
+  
+    ListBTN(){
+      
+       this.$router.push('/Home');
+    },
+      TransBTN(){
+          this.$router.push('/Translator');
+      },
+      Salir(){
+         this.$router.push('/');
+      }
+  }
 }
 </script>

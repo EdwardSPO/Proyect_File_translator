@@ -33,7 +33,13 @@
 
                                   <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.password.required" >The field is required </div>
                             <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.password.minLength" >The lastName must have at least 8 characters  </div>                                                             
-                        </div>                   
+                        </div>     
+                            <div class="col-md-4 position-relative">
+                            <label for="nombre" class="form-label">idRol</label>
+                          <input type="text" class="form-control" name="idRol" id="idRol" v-model="form.idRol" required>
+                           <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.idRol.required" >The field is required</div>
+                            <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.idRol.minLength" >The lastName must have at least 2 characters </div>                        
+                        </div>              
                         <div class="col-12">
                      
                           <button type="submit" class="btn btn-primary fw-bold float-end" v-on:click="guardar()" >Save</button>              
@@ -44,13 +50,14 @@
             </div>
         </div>
     </div>        
-        <Footer/>       
     </div>
+
+    
 </template>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
+
 import axios from 'axios';
 import swal from 'sweetalert';
 import {required, minLength , email} from 'vuelidate/lib/validators';
@@ -66,17 +73,18 @@ export default {
               "lastName": "",
               "email":"",
               "password":"",
+              "idRol":"",
                errors: []
            
           },
         }
     },
     components:{
-        Header,
-        Footer
+        Header
     },
     methods:{     
-        guardar(){         
+        guardar(){       
+            console.log(this.form)  
             axios.post(global.API_USERS,this.form)
             .then(data =>{
                 this.makeToast("Hecho","Usuario creado","success"+data);
@@ -84,7 +92,7 @@ export default {
         
             }).catch( e =>{
                 console.log(e); 
-                if(this.form.email == ""){                     
+              /*  if(this.form.email == ""){                     
                swal({title: "Error",  text: "There are empty fields",
                    icon: "error",
                    })
@@ -93,7 +101,7 @@ export default {
                     swal({title: "Warning",  text: "Email already exists",
                    icon: "warning",
                    })
-                }
+                }*/
                    checkForm();
             });
         },

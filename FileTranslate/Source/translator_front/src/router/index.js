@@ -1,41 +1,37 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Dashboard from '../views/Dashboard.vue'
-import Login from '../views/Login.vue'
-import Nuevo from '../views/Nuevo.vue'
-import Translator from '../views/Translator'
 
 Vue.use(VueRouter)
 
 const routes = [
-
+  {
+    path: '/home',
+    name: 'Home',
+    component: () => import('../views/Home.vue')
+  },
   {
     path: '/',
     name: 'Login',
-    component: Login
+    component: () => import('../views/Login.vue')
+ 
   },
   {
-    path: '/translator/:id',
+    path: '/translator',
     name: 'Translator',
-    component: Translator
-},
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard
+    component: () => import('../views/Translator.vue')
+ 
   },
-
   {
     path: '/nuevo',
     name: 'Nuevo',
-    component: Nuevo
+    component: () => import('../views/Nuevo.vue')
   }
+
+  
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 

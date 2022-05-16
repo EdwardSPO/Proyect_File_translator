@@ -1,6 +1,9 @@
 <template>
   <div>
     <Header />
+    <br/>
+ <h3> Hello {{admin}}, {{data.name}}</h3> 
+  <br/>
     <div id="contenedor">
       <h1>{{ titulo }}</h1>
       <div class="header"></div>
@@ -76,8 +79,19 @@ export default {
       datos: [],
       groups: [],
       loading: false,
+      admin: '',
     };
   },
+   computed:{
+        data(){
+          if (this.$store.state.data.data.idRol==1){
+            this.admin = "Administrator"
+          }else{
+            this.admin = "User"
+          }
+          return this.$store.state.data.data;
+        }
+      },
   components: {
     Header,
   },
