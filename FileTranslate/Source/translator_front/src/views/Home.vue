@@ -1,5 +1,5 @@
 <template>
- <div class="home">
+ <div>
 <Header/>
 <br/>
  <h3> Hello {{admin}}, {{data.name}}</h3> 

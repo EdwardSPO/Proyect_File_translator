@@ -10,7 +10,7 @@
         <v-tabs align-with-title>
           <v-tab @click="ListBTN()">List Users</v-tab>
           <v-tab @click="TransBTN()">Translator</v-tab>
-          <v-tab>Tab 3</v-tab>
+          <v-tab @click="ListUserBTN()">ListUser</v-tab>
         </v-tabs>
       </template>
       <v-spacer></v-spacer>
@@ -37,6 +37,9 @@ export default {
       },
       Salir(){
          this.$router.push('/');
+      },
+      ListUserBTN(){
+        this.$router.push('/ListUser');
       }
   }
 }

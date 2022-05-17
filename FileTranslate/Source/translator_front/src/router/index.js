@@ -28,6 +28,13 @@ const routes = [
     component: () => import('../views/Nuevo.vue')
   }
 
+  ,
+  {
+    path: '/ListUser',
+    name: 'ListUser',
+    component: () => import('../views/ListUser.vue')
+  }
+
   
 ]
 
