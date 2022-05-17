@@ -18,5 +18,7 @@ namespace ApiUsers.Models
         [ForeignKey("User")]
         public int IdUser { get; set; }
         public virtual User User { get; set; }
+
+
     }
 }

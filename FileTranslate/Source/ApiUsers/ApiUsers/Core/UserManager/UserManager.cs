@@ -121,5 +121,45 @@ namespace ApiUsers.Core.UserManager
             }
             return resultado;
         }
+
+
+
+
+
+     public async Task<ResultHelper<User>> GetByIdListAsync(int id)
+        {
+            var resultado = new ResultHelper<User>();
+            var user = await _context.Users.Include(s => s.UpdateFile).FirstOrDefaultAsync(s => s.Id == id);
+            if (user != null)
+            {
+                resultado.Value = user;
+            }
+            else
+            {
+                string error = _ERROR_USER;
+                resultado.AddError(error);
+            }
+            return resultado;
+        }
+
+
+        public async Task<ResultHelper<IEnumerable<UpdateFile>>> GetListAsync()
+        {
+            var resultado = new ResultHelper<IEnumerable<UpdateFile>>();
+            var users = await _context.UpdateFiles.Include(s => s.User).ToListAsync();
+
+            if (users.Count > 0)
+            {
+                resultado.Value = users;
+            }
+            else
+            {
+                string error = _ERROR_LIST;
+                resultado.AddError(error);
+            }
+            return resultado;
+        }
+
+      
     }
 }

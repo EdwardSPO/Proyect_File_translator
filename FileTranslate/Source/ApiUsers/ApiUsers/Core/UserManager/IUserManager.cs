@@ -11,6 +11,11 @@ namespace ApiUsers.Core.UserManager
         Task<ResultHelper<User>> GetByIdAsync(int id);
         Task<ResultHelper<User>> CreateAsync(User user);
         Task<ResultHelper<User>> LoginAsync(User user);
+        Task<ResultHelper<IEnumerable<UpdateFile>>> GetListAsync();
+        Task<ResultHelper<User>> GetByIdListAsync(int id);
+
+
+        
 
     }
 }
