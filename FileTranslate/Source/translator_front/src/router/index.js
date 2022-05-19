@@ -26,13 +26,16 @@ const routes = [
     path: '/nuevo',
     name: 'Nuevo',
     component: () => import('../views/Nuevo.vue')
-  }
-
-  ,
+  },
   {
     path: '/ListUser',
     name: 'ListUser',
     component: () => import('../views/ListUser.vue')
+  },
+  {
+    path: '/ListUsers',
+    name: 'ListUsers',
+    component: () => import('../views/ListUsers.vue')
   }
 
   

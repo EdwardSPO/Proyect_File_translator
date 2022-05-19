@@ -18,6 +18,7 @@
 </template>
 <script>
 import axios from "axios";
+import swal from 'sweetalert';
   export default {
 
     data: () => ({
@@ -42,11 +43,7 @@ import axios from "axios";
         axios.post('https://localhost:44394/api/user/login', json)
         .then( data =>{
            if(data.status == "201"){
-            // console.log(data);
-           
-              //console.log(data);
-    //    this.NumeroInsertadoPadre=this.Numero;
-      //   this.NumeroAEnviar=this. NumeroInsertadoPadre
+       
            this.$store.commit("getUser", data);
            this.$router.push('/Home');
            }else{

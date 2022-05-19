@@ -1,11 +1,12 @@
 <template>
   <div>
-    <Header />
-    <br/>
- <h3> Hello {{admin}}, {{data.name}}</h3> 
-  <br/>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <Header /> 
+    <br><h3> Hello {{admin}}, {{data.name}}</h3><br>
+              
     <div id="contenedor">
-      <h1>{{ titulo }}</h1>
+    <h1>{{titulo}}</h1>
       <div class="header"></div>
 
       <div class="container">
@@ -21,7 +22,7 @@
           <label class="input-group-text" for="inputGroupSelect01" id="from">
             Translate from</label
           >
-          <select v-model="Seleccionado" class="form-select" id="data">
+          <select v-model="Seleccionado" class="form-select" id="Translatefrom">
             <option v-for="data in datos" :value="data" :key="data">
               {{ data.name }}
             </option>
@@ -31,7 +32,7 @@
           <label class="input-group-text" for="inputGroupSelect01" id="into"
             >Translate into</label
           >
-          <select class="form-select" id="data1">
+          <select class="form-select" id="TranslateInto">
             <option selected></option>
             <option v-for="data in datos" :value="data" :key="data">
               {{ data.name }}
@@ -44,9 +45,9 @@
           role="group"
           aria-label="Basic mixed styles example"
         >
-        <div v-if="loading">
+        <!-- <div v-if="loading">
           <p id="cargado">Cargando...</p>
-        </div>
+        </div> -->
           <button
             id="traduccion"
             type="button"
@@ -62,14 +63,18 @@
   </div>
 </template>
 <script>
+
 import Header from "@/components/Header.vue";
 import global from "../../config.js";
 import axios from "axios";
+const crear ="https://localhost:5024/api/FileList/listTranslate";
+
+
 
 export default {
   data() {
     return {
-      titulo: "Traductor",
+      titulo: "Translate file",
       uploadURL: global.URL_FILE,
       urlTranslate: global.URL_TRANSLATE,
       file: "",
@@ -80,6 +85,8 @@ export default {
       groups: [],
       loading: false,
       admin: '',
+         updateFile: [],
+      updateFiles:{}
     };
   },
    computed:{
@@ -92,17 +99,24 @@ export default {
           return this.$store.state.data.data;
         }
       },
-  components: {
-    Header,
-  },
+    components: {
+      Header,
+    },
   mounted: function () {
     let direccion = global.API_LANGUAGES;
     axios.get(direccion).then((data) => {
       this.datos = data.data;
       this.groups = this.getTranslate();
+       
     });
   },
   methods: {
+     clearFile() {
+        this.updateFiles.Id = 0;
+      this.updateFiles.Link = "";
+       this.updateFiles.NameFile = "";
+        this.updateFiles.Status = "";
+      },
     getFile(event) {
       var formFile = document.getElementById("formFile");
       var archivoRuta = formFile.value;
@@ -118,6 +132,8 @@ export default {
       } else {
         this.file = event.target.files[0];
         console.log(this.file);
+         console.log(this.items)
+      
       }
     },
     submitForm(event) {
@@ -154,6 +170,9 @@ export default {
             window.location=response.data.translatedFileUrl; 
           }
         })
+         axios.post(crear,this.updateFiles,
+      this.updateFiles.NameFile= document.getElementById('formFile').files[0].name,
+      this.updateFiles.Link="")
     },
     saveTranslate(event) {
          this.submitForm(event), this.getTranslate(event)
@@ -174,21 +193,21 @@ export default {
 h1 {
   position: absolute;
   color: #2f6bd9;
-  top: 80px;
-  left: 400px;
+  top: 150px;
+  left: 820px;
 }
 .form-control {
   position: absolute;
-  top: 180px;
-  left: 165px;
-  width: 690px;
+  top: 232px;
+  left: 320px;
+  width: 450px;
   height: 40px;
 }
 .form-select {
   position: absolute;
-  top: 300px;
-  left: 100px;
-  width: -50px;
+  top: 190px;
+  left: 165px;
+  width: 690px;
   height: 40px;
 }
 .input-group-text {
@@ -199,8 +218,8 @@ h1 {
 }
 .btn {
   position: absolute;
-  top: 385px;
-  left: 310px;
+  top: 49px;
+  left: 1181px;
 }
 .barraStyle {
   position: absolute;
@@ -216,8 +235,8 @@ h1 {
   left: 850px;
   color: rgb(5, 83, 5);
 }
-#contenedor {
-  top: 100px;
+  /* #contenedor {
+  top: 200px;
   position: absolute;
   left: 500px;
   width: 980px;
@@ -226,34 +245,36 @@ h1 {
   border-color: #2f6bd9;
   border-radius: 15px;
   background-color: rgb(244, 241, 241);
-}
-#data {
+}   */
+#Translatefrom {
   position: absolute;
-  top: 260px;
-  width: 523px;
-  left: 320px;
+  top: 97px;
+  left: 596px;
+  width: 200px;
+  height: 40px;
 }
-#data1 {
+#TranslateInto {
   position: absolute;
-  top: 320px;
-  width: 523px;
-  left: 320px;
+  top: 85px;
+  left: 936px;
+  width: 200px;
+  height: 40px;
 }
 #from {
   position: absolute;
-  top: 260px;
-  left: 150px;
-  width: 170px;
+  top: 97px;
+  left:465px;
+  width: 130px;
 }
 #into {
   position: absolute;
-  top: 320px;
-  left: 150px;
-  width: 170px;
+  top: 85px;
+  left:805px;
+  width: 130px;
 }
-#cargado{
+/* #cargado{
   position: absolute;
   top: 395px;
   left: 200px;
-}
+} */
 </style>

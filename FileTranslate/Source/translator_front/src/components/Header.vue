@@ -25,7 +25,19 @@
 
 export default {
   name: 'Header',
-
+ data(){
+        return{
+           admin: ''   
+        }
+        
+    },
+     computed:{
+        data(){
+          this.admin=this.$store.state.data.data.idRol
+    
+          return this.$store.state.data.data;
+        }
+      },
   methods:{
   
     ListBTN(){
@@ -39,7 +51,15 @@ export default {
          this.$router.push('/');
       },
       ListUserBTN(){
+         this.admin=this.$store.state.data.data.idRol
+        if(this.admin==2)
+        {
         this.$router.push('/ListUser');
+        }
+        else{
+           this.$router.push('/ListUsers');
+        }
+
       }
   }
 }
