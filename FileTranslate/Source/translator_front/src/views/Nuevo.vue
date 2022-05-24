@@ -35,10 +35,14 @@
                             <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.password.minLength" >The lastName must have at least 8 characters  </div>                                                             
                         </div>     
                             <div class="col-md-4 position-relative">
-                            <label for="nombre" class="form-label">idRol</label>
-                          <input type="text" class="form-control" name="idRol" id="idRol" v-model="form.idRol" required>
-                           <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.idRol.required" >The field is required</div>
-                            <div class="alert alert-danger" role="alert" v-if="submited && !$v.form.idRol.minLength" >The lastName must have at least 2 characters </div>                        
+                            <label for="nombre" class="form-label">Rol</label>              
+                   
+                             <select class="form-select" name="idRol" id="idRol" v-model="form.idRol" required>
+                           <option Value="1">Administrator</option>  
+                               <option Value="2">User</option>                  
+                          
+                       
+                          </select>                       
                         </div>              
                         <div class="col-12">
                      
@@ -57,11 +61,10 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 import Header from '@/components/Header.vue'
-
 import axios from 'axios';
 import swal from 'sweetalert';
 import {required, minLength , email} from 'vuelidate/lib/validators';
-import global from '../../config.js'
+
 export default {
     name:"Nuevo",
    
@@ -85,23 +88,20 @@ export default {
     methods:{     
         guardar(){       
             console.log(this.form)  
-            axios.post(global.API_USERS,this.form)
+            axios.post("https://localhost:44394/api/user",this.form)
             .then(data =>{
                 this.makeToast("Hecho","Usuario creado","success"+data);
-                this.$router.push("/dashboard");
+                this.$router.push("/Home");
         
             }).catch( e =>{
-                console.log(e); 
-              /*  if(this.form.email == ""){                     
-               swal({title: "Error",  text: "There are empty fields",
-                   icon: "error",
-                   })
-                }
-                else{
+           
+             if(e.message=="Request failed with status code 400"){
                     swal({title: "Warning",  text: "Email already exists",
                    icon: "warning",
                    })
-                }*/
+                }else{
+                console.log(e); 
+                }
                    checkForm();
             });
         },
@@ -114,7 +114,7 @@ export default {
     
         },       
        salir(){
-            this.$router.push("/dashboard");
+            this.$router.push("/Home");
         },
         makeToast(titulo,texto,tipo) {
             this.toastCount++
@@ -144,6 +144,9 @@ export default {
                  password:{
                     required,
                     minLength: minLength(8)                   
+                },
+                 idRol:{
+                    required   
                 }
             }
         }
