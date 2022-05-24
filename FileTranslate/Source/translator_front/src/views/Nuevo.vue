@@ -102,6 +102,11 @@ export default {
                 }else{
                 console.log(e); 
                 }
+                if(this.form.email==""){
+                    swal({title: "Warning",  text: "you must fill in the empty field",
+                   icon: "warning",
+                   }) 
+                }
                    checkForm();
             });
         },
